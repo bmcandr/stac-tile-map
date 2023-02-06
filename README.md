@@ -1,5 +1,7 @@
 # STAC COG with tiler on `folium` map
 
+[![pages-build-deployment](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment)
+
 This is the result of a fun little weekend project inspired by @scottyhq's [`share-a-map`](https://github.com/scottyhq/share-a-map) repository.
 
 The `src/create_map.py` script:
