@@ -11,6 +11,6 @@ The `src/create_map.py` script:
 * creates a tile layer using [Development Seed's](https://developmentseed.org/) public [COG tiler](https://cogeo.xyz/)
 * generates an HTML file that displays the scene on an interactive map
 
-I've also created [a GitHub Actions workflow](https://bmcandr.github.io/stac-tile-map/blob/main/.github/workflows/create_map.yml) to run this script every so often and commit the result to the repository, thereby periodically updating the map. Neat!
+I've also created [a GitHub Actions workflow](https://github.com/bmcandr/stac-tile-map/blob/main/.github/workflows/create_map.yml) to run this script every so often and commit the result to the repository, thereby periodically updating the map. Neat!
 
 [Click here to view the map](https://bmcandr.github.io/stac-tile-map/map.html)
