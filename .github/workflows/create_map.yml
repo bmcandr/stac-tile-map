@@ -1,0 +1,26 @@
+---
+name: Create map from STAC Item
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+jobs:
+  update-map:
+    runs-on: ubuntu-latest
+    env:
+      SCRIPT_NAME: create_map.py
+      GEOJSON_FILE: national-parks.geojson
+      MAP_FILE: map.html
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.6
+          cache: pip
+      - run: pip install -r $SCRIPT_DIR/requirements.txt
+      - run: python src/$SCRIPT_NAME data/$GEOJSON_FILE $MAP_FILE
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update map"
+          default_author: github_actions
