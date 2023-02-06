@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_679bd147bd0b0e23521cb231de73b2f2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    
+                    <style>
+                        .foliumpopup {
+                            margin: auto;
+                        }
+                       .foliumpopup table{
+                            margin: auto;
+                        }
+                        .foliumpopup tr{
+                            text-align: left;
+                        }
+                        .foliumpopup th{
+                            padding: 2px; padding-right: 8px;
+                        }
+                    </style>
+            
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_679bd147bd0b0e23521cb231de73b2f2" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_679bd147bd0b0e23521cb231de73b2f2 = L.map(
+                "map_679bd147bd0b0e23521cb231de73b2f2",
+                {
+                    center: [34.74934487949713, -81.49618755686386],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_3ce0abc43964339e4f2a284bdc265af5 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_679bd147bd0b0e23521cb231de73b2f2);
+        
+    
+            var tile_layer_386ac9f2e784312ea5a6ed0c120e3d9f = L.tileLayer(
+                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/S/MU/2023/1/S2B_17SMU_20230126_0_L2A/TCI.tif",
+                {"attribution": "IndigoAg", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_679bd147bd0b0e23521cb231de73b2f2);
+        
+    
+
+        function geo_json_cad3634b9c676dd3db8ef16a51d34191_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_cad3634b9c676dd3db8ef16a51d34191 = L.geoJson(null, {
+                onEachFeature: geo_json_cad3634b9c676dd3db8ef16a51d34191_onEachFeature,
+            
+        });
+
+        function geo_json_cad3634b9c676dd3db8ef16a51d34191_add (data) {
+            geo_json_cad3634b9c676dd3db8ef16a51d34191
+                .addData(data)
+                .addTo(map_679bd147bd0b0e23521cb231de73b2f2);
+        }
+            geo_json_cad3634b9c676dd3db8ef16a51d34191_add({"features": [{"geometry": {"coordinates": [-81.38979428477106, 35.14125664997549], "type": "Point"}, "id": 179, "properties": {"Code": "KIMO", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/S/MU/2023/1/S2B_17SMU_20230126_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Kings Mountain National Military Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_17SMU_20230126_0_L2A\u003eS2B_17SMU_20230126_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
+
+        
+    
+    geo_json_cad3634b9c676dd3db8ef16a51d34191.bindPopup(
+    function(layer){
+    let div = L.DomUtil.create('div');
+    
+    let handleObject = feature=>typeof(feature)=='object' ? JSON.stringify(feature) : feature;
+    let fields = ["Code", "Name", "STAC Item", "Download"];
+    let aliases = ["Code", "Name", "STAC Item", "Download"];
+    let table = '<table>' +
+        String(
+        fields.map(
+        (v,i)=>
+        `<tr>
+            <th>${aliases[i].toLocaleString()}</th>
+            
+            <td>${handleObject(layer.feature.properties[v]).toLocaleString()}</td>
+        </tr>`).join(''))
+    +'</table>';
+    div.innerHTML=table;
+    
+    return div
+    }
+    ,{"className": "foliumpopup"});
+                     
+    
+            var layer_control_141d68d3786285cafbe1627ec67d4612 = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_3ce0abc43964339e4f2a284bdc265af5,
+                },
+                overlays :  {
+                    "COG" : tile_layer_386ac9f2e784312ea5a6ed0c120e3d9f,
+                    "Marker" : geo_json_cad3634b9c676dd3db8ef16a51d34191,
+                },
+            };
+            L.control.layers(
+                layer_control_141d68d3786285cafbe1627ec67d4612.base_layers,
+                layer_control_141d68d3786285cafbe1627ec67d4612.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_679bd147bd0b0e23521cb231de73b2f2);
+        
+</script>
+</html>
