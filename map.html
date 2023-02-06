@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_a4d579bf144113f3de27e529fd51fa4a {
+                #map_aa0f262f1ce22920d70321a7081e0716 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -55,16 +55,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_a4d579bf144113f3de27e529fd51fa4a" ></div>
+            <div class="folium-map" id="map_aa0f262f1ce22920d70321a7081e0716" ></div>
         
 </body>
 <script>
     
     
-            var map_a4d579bf144113f3de27e529fd51fa4a = L.map(
-                "map_a4d579bf144113f3de27e529fd51fa4a",
+            var map_aa0f262f1ce22920d70321a7081e0716 = L.map(
+                "map_aa0f262f1ce22920d70321a7081e0716",
                 {
-                    center: [39.21756230755299, -78.04796468808829],
+                    center: [41.944238000352534, -70.75049546225532],
                     crs: L.CRS.EPSG3857,
                     zoom: 10,
                     zoomControl: true,
@@ -76,38 +76,38 @@
 
         
     
-            var tile_layer_c2b4e704ef7a76312b18ef692cda2280 = L.tileLayer(
+            var tile_layer_66708dace13529ffa2df1562983be107 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_a4d579bf144113f3de27e529fd51fa4a);
+            ).addTo(map_aa0f262f1ce22920d70321a7081e0716);
         
     
-            var tile_layer_aadfcfe56cd71817b4873c8766448346 = L.tileLayer(
-                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/S/QD/2022/12/S2A_17SQD_20221209_0_L2A/TCI.tif",
+            var tile_layer_9c3a4d98c167fdc0ba7e2700800ccc24 = L.tileLayer(
+                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/19/T/CG/2022/12/S2A_19TCG_20221220_0_L2A/TCI.tif",
                 {"attribution": "IndigoAg", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_a4d579bf144113f3de27e529fd51fa4a);
+            ).addTo(map_aa0f262f1ce22920d70321a7081e0716);
         
     
 
-        function geo_json_4c22af7ad893b31dc30d63e9b9d865a2_onEachFeature(feature, layer) {
+        function geo_json_18eea493560dc7995f36a51e3005e535_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_4c22af7ad893b31dc30d63e9b9d865a2 = L.geoJson(null, {
-                onEachFeature: geo_json_4c22af7ad893b31dc30d63e9b9d865a2_onEachFeature,
+        var geo_json_18eea493560dc7995f36a51e3005e535 = L.geoJson(null, {
+                onEachFeature: geo_json_18eea493560dc7995f36a51e3005e535_onEachFeature,
             
         });
 
-        function geo_json_4c22af7ad893b31dc30d63e9b9d865a2_add (data) {
-            geo_json_4c22af7ad893b31dc30d63e9b9d865a2
+        function geo_json_18eea493560dc7995f36a51e3005e535_add (data) {
+            geo_json_18eea493560dc7995f36a51e3005e535
                 .addData(data)
-                .addTo(map_a4d579bf144113f3de27e529fd51fa4a);
+                .addTo(map_aa0f262f1ce22920d70321a7081e0716);
         }
-            geo_json_4c22af7ad893b31dc30d63e9b9d865a2_add({"features": [{"geometry": {"coordinates": [-77.72920504544601, 39.31756187483286], "type": "Point"}, "id": 195, "properties": {"Code": "HAFE", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/S/QD/2022/12/S2A_17SQD_20221209_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Harpers Ferry National Historical Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_17SQD_20221209_0_L2A\u003eS2A_17SQD_20221209_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
+            geo_json_18eea493560dc7995f36a51e3005e535_add({"features": [{"geometry": {"coordinates": [-70.92327477113328, 41.63460733723657], "type": "Point"}, "id": 41, "properties": {"Code": "NEBE", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/19/T/CG/2022/12/S2A_19TCG_20221220_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "New Bedford Whaling National Historical Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_19TCG_20221220_0_L2A\u003eS2A_19TCG_20221220_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
 
         
     
-    geo_json_4c22af7ad893b31dc30d63e9b9d865a2.bindPopup(
+    geo_json_18eea493560dc7995f36a51e3005e535.bindPopup(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -131,20 +131,20 @@
     ,{"className": "foliumpopup"});
                      
     
-            var layer_control_695b6bd6e7f23c08065bd1a0188ae40a = {
+            var layer_control_8567238060ee446f0d140a2b11592e0d = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_c2b4e704ef7a76312b18ef692cda2280,
+                    "cartodbpositron" : tile_layer_66708dace13529ffa2df1562983be107,
                 },
                 overlays :  {
-                    "COG" : tile_layer_aadfcfe56cd71817b4873c8766448346,
-                    "Marker" : geo_json_4c22af7ad893b31dc30d63e9b9d865a2,
+                    "COG" : tile_layer_9c3a4d98c167fdc0ba7e2700800ccc24,
+                    "Marker" : geo_json_18eea493560dc7995f36a51e3005e535,
                 },
             };
             L.control.layers(
-                layer_control_695b6bd6e7f23c08065bd1a0188ae40a.base_layers,
-                layer_control_695b6bd6e7f23c08065bd1a0188ae40a.overlays,
+                layer_control_8567238060ee446f0d140a2b11592e0d.base_layers,
+                layer_control_8567238060ee446f0d140a2b11592e0d.overlays,
                 {"autoZIndex": true, "collapsed": true, "position": "topright"}
-            ).addTo(map_a4d579bf144113f3de27e529fd51fa4a);
+            ).addTo(map_aa0f262f1ce22920d70321a7081e0716);
         
 </script>
 </html>
