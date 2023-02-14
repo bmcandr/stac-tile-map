@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_d928b832c096803d981e9ac56c97fd5c {
+                #map_26008e524ec1cf43aa9722eff1bbcaf5 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -55,16 +55,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_d928b832c096803d981e9ac56c97fd5c" ></div>
+            <div class="folium-map" id="map_26008e524ec1cf43aa9722eff1bbcaf5" ></div>
         
 </body>
 <script>
     
     
-            var map_d928b832c096803d981e9ac56c97fd5c = L.map(
-                "map_d928b832c096803d981e9ac56c97fd5c",
+            var map_26008e524ec1cf43aa9722eff1bbcaf5 = L.map(
+                "map_26008e524ec1cf43aa9722eff1bbcaf5",
                 {
-                    center: [41.05336369999365, -81.53396088524732],
+                    center: [36.550060674930556, -117.50436723034484],
                     crs: L.CRS.EPSG3857,
                     zoom: 10,
                     zoomControl: true,
@@ -76,38 +76,38 @@
 
         
     
-            var tile_layer_847e8f3a7d553e59d19c0c2e5a121597 = L.tileLayer(
+            var tile_layer_3079b7486f34952ff6d24574a6de2d92 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_d928b832c096803d981e9ac56c97fd5c);
+            ).addTo(map_26008e524ec1cf43aa9722eff1bbcaf5);
         
     
-            var tile_layer_3c3c4bb58002ccf0cc4413ed0f0d866f = L.tileLayer(
-                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/T/MF/2022/11/S2A_17TMF_20221122_0_L2A/TCI.tif",
+            var tile_layer_3edc2153cd0122f6e1d8956607a03979 = L.tileLayer(
+                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/11/S/MA/2023/2/S2B_11SMA_20230207_0_L2A/TCI.tif",
                 {"attribution": "IndigoAg", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_d928b832c096803d981e9ac56c97fd5c);
+            ).addTo(map_26008e524ec1cf43aa9722eff1bbcaf5);
         
     
 
-        function geo_json_ac620b52a32cc322fe71e898777faa9c_onEachFeature(feature, layer) {
+        function geo_json_a8a0dfb5cb57b04490abad53f2a240f7_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_ac620b52a32cc322fe71e898777faa9c = L.geoJson(null, {
-                onEachFeature: geo_json_ac620b52a32cc322fe71e898777faa9c_onEachFeature,
+        var geo_json_a8a0dfb5cb57b04490abad53f2a240f7 = L.geoJson(null, {
+                onEachFeature: geo_json_a8a0dfb5cb57b04490abad53f2a240f7_onEachFeature,
             
         });
 
-        function geo_json_ac620b52a32cc322fe71e898777faa9c_add (data) {
-            geo_json_ac620b52a32cc322fe71e898777faa9c
+        function geo_json_a8a0dfb5cb57b04490abad53f2a240f7_add (data) {
+            geo_json_a8a0dfb5cb57b04490abad53f2a240f7
                 .addData(data)
-                .addTo(map_d928b832c096803d981e9ac56c97fd5c);
+                .addTo(map_26008e524ec1cf43aa9722eff1bbcaf5);
         }
-            geo_json_ac620b52a32cc322fe71e898777faa9c_add({"features": [{"geometry": {"coordinates": [-81.5690344075238, 41.26071335500069], "type": "Point"}, "id": 268, "properties": {"Code": "CUVA", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/17/T/MF/2022/11/S2A_17TMF_20221122_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Cuyahoga Valley National Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_17TMF_20221122_0_L2A\u003eS2A_17TMF_20221122_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
+            geo_json_a8a0dfb5cb57b04490abad53f2a240f7_add({"features": [{"geometry": {"coordinates": [-117.13511154435771, 36.48741910067162], "type": "Point"}, "id": 341, "properties": {"Code": "DEVA", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/11/S/MA/2023/2/S2B_11SMA_20230207_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Death Valley National Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_11SMA_20230207_0_L2A\u003eS2B_11SMA_20230207_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
 
         
     
-    geo_json_ac620b52a32cc322fe71e898777faa9c.bindPopup(
+    geo_json_a8a0dfb5cb57b04490abad53f2a240f7.bindPopup(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -131,20 +131,20 @@
     ,{"className": "foliumpopup"});
                      
     
-            var layer_control_ab5c18a6e2930acd20686c195a03223f = {
+            var layer_control_30f074d0cbdace93e50ca90524543dc6 = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_847e8f3a7d553e59d19c0c2e5a121597,
+                    "cartodbpositron" : tile_layer_3079b7486f34952ff6d24574a6de2d92,
                 },
                 overlays :  {
-                    "COG" : tile_layer_3c3c4bb58002ccf0cc4413ed0f0d866f,
-                    "Marker" : geo_json_ac620b52a32cc322fe71e898777faa9c,
+                    "COG" : tile_layer_3edc2153cd0122f6e1d8956607a03979,
+                    "Marker" : geo_json_a8a0dfb5cb57b04490abad53f2a240f7,
                 },
             };
             L.control.layers(
-                layer_control_ab5c18a6e2930acd20686c195a03223f.base_layers,
-                layer_control_ab5c18a6e2930acd20686c195a03223f.overlays,
+                layer_control_30f074d0cbdace93e50ca90524543dc6.base_layers,
+                layer_control_30f074d0cbdace93e50ca90524543dc6.overlays,
                 {"autoZIndex": true, "collapsed": true, "position": "topright"}
-            ).addTo(map_d928b832c096803d981e9ac56c97fd5c);
+            ).addTo(map_26008e524ec1cf43aa9722eff1bbcaf5);
         
 </script>
 </html>
