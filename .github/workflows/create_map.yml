@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '40 0 * * *'
 jobs:
   update-map:
     runs-on: ubuntu-latest
