@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_eaeb7f1ace13bb1035e60fd394f7948a {
+                #map_f11d714dd0c44f5de981bbb11abc36b4 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -55,16 +55,16 @@
 <body>
     
     
-            <div class="folium-map" id="map_eaeb7f1ace13bb1035e60fd394f7948a" ></div>
+            <div class="folium-map" id="map_f11d714dd0c44f5de981bbb11abc36b4" ></div>
         
 </body>
 <script>
     
     
-            var map_eaeb7f1ace13bb1035e60fd394f7948a = L.map(
-                "map_eaeb7f1ace13bb1035e60fd394f7948a",
+            var map_f11d714dd0c44f5de981bbb11abc36b4 = L.map(
+                "map_f11d714dd0c44f5de981bbb11abc36b4",
                 {
-                    center: [41.06089867285094, -74.35533528819263],
+                    center: [47.35737323458871, -123.59775741539084],
                     crs: L.CRS.EPSG3857,
                     zoom: 10,
                     zoomControl: true,
@@ -76,38 +76,38 @@
 
         
     
-            var tile_layer_09a256fa5dad60f404448020f21d3fea = L.tileLayer(
+            var tile_layer_aceac62114508cf3af3c77ae6578e132 = L.tileLayer(
                 "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca target=\"_blank\" href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca target=\"_blank\" href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_eaeb7f1ace13bb1035e60fd394f7948a);
+            ).addTo(map_f11d714dd0c44f5de981bbb11abc36b4);
         
     
-            var tile_layer_d39c421700b8bf1ee4c9b298ec87a6dc = L.tileLayer(
-                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/18/T/WL/2023/2/S2A_18TWL_20230214_0_L2A/TCI.tif",
+            var tile_layer_3b201ccf9e50d723f6c0e1253ea5f10e = L.tileLayer(
+                "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/T/DT/2023/1/S2B_10TDT_20230130_0_L2A/TCI.tif",
                 {"attribution": "IndigoAg", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
-            ).addTo(map_eaeb7f1ace13bb1035e60fd394f7948a);
+            ).addTo(map_f11d714dd0c44f5de981bbb11abc36b4);
         
     
 
-        function geo_json_a2f2a160b13463bed9ec2672f7f83be2_onEachFeature(feature, layer) {
+        function geo_json_78625c035319f44556a0a210bdfa816b_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_a2f2a160b13463bed9ec2672f7f83be2 = L.geoJson(null, {
-                onEachFeature: geo_json_a2f2a160b13463bed9ec2672f7f83be2_onEachFeature,
+        var geo_json_78625c035319f44556a0a210bdfa816b = L.geoJson(null, {
+                onEachFeature: geo_json_78625c035319f44556a0a210bdfa816b_onEachFeature,
             
         });
 
-        function geo_json_a2f2a160b13463bed9ec2672f7f83be2_add (data) {
-            geo_json_a2f2a160b13463bed9ec2672f7f83be2
+        function geo_json_78625c035319f44556a0a210bdfa816b_add (data) {
+            geo_json_78625c035319f44556a0a210bdfa816b
                 .addData(data)
-                .addTo(map_eaeb7f1ace13bb1035e60fd394f7948a);
+                .addTo(map_f11d714dd0c44f5de981bbb11abc36b4);
         }
-            geo_json_a2f2a160b13463bed9ec2672f7f83be2_add({"features": [{"geometry": {"coordinates": [-73.82577276392446, 40.89283511586187], "type": "Point"}, "id": 14, "properties": {"Code": "SAPA", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/18/T/WL/2023/2/S2A_18TWL_20230214_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Saint Paul\u0027s Church National Historic Site", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_18TWL_20230214_0_L2A\u003eS2A_18TWL_20230214_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
+            geo_json_78625c035319f44556a0a210bdfa816b_add({"features": [{"geometry": {"coordinates": [-123.6194451629227, 47.79453520449651], "type": "Point"}, "id": 300, "properties": {"Code": "OLYM", "Download": "\u003ca target=\u0027_blank\u0027 href=https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/10/T/DT/2023/1/S2B_10TDT_20230130_0_L2A/TCI.tif\u003eclick here\u003c/a\u003e", "Name": "Olympic National Park", "STAC Item": "\u003ca target=\u0027_blank\u0027 href=https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2B_10TDT_20230130_0_L2A\u003eS2B_10TDT_20230130_0_L2A\u003c/a\u003e"}, "type": "Feature"}]});
 
         
     
-    geo_json_a2f2a160b13463bed9ec2672f7f83be2.bindPopup(
+    geo_json_78625c035319f44556a0a210bdfa816b.bindPopup(
     function(layer){
     let div = L.DomUtil.create('div');
     
@@ -131,20 +131,20 @@
     ,{"className": "foliumpopup"});
                      
     
-            var layer_control_06a71358ea18ba3c69d84ffa83131e74 = {
+            var layer_control_93269cc09b46ef8e2ae59caaca90ed41 = {
                 base_layers : {
-                    "cartodbpositron" : tile_layer_09a256fa5dad60f404448020f21d3fea,
+                    "cartodbpositron" : tile_layer_aceac62114508cf3af3c77ae6578e132,
                 },
                 overlays :  {
-                    "COG" : tile_layer_d39c421700b8bf1ee4c9b298ec87a6dc,
-                    "Marker" : geo_json_a2f2a160b13463bed9ec2672f7f83be2,
+                    "COG" : tile_layer_3b201ccf9e50d723f6c0e1253ea5f10e,
+                    "Marker" : geo_json_78625c035319f44556a0a210bdfa816b,
                 },
             };
             L.control.layers(
-                layer_control_06a71358ea18ba3c69d84ffa83131e74.base_layers,
-                layer_control_06a71358ea18ba3c69d84ffa83131e74.overlays,
+                layer_control_93269cc09b46ef8e2ae59caaca90ed41.base_layers,
+                layer_control_93269cc09b46ef8e2ae59caaca90ed41.overlays,
                 {"autoZIndex": true, "collapsed": true, "position": "topright"}
-            ).addTo(map_eaeb7f1ace13bb1035e60fd394f7948a);
+            ).addTo(map_f11d714dd0c44f5de981bbb11abc36b4);
         
 </script>
 </html>
