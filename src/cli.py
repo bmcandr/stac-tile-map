@@ -25,7 +25,11 @@ logger = logging.getLogger(__file__)
     default=settings.DEFAULT_COLLECTION,
     help="STAC Collection ID to search",
 )
-@click.option("--asset-key", default="visual", help="STAC asset key to add to map")
+@click.option(
+    "--asset-key",
+    default=settings.DEFAULT_ASSET_KEY,
+    help="STAC asset key to add to map",
+)
 @click.option(
     "--name-key",
     default=settings.DEFAULT_NAME_KEY,
