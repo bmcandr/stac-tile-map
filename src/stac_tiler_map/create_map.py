@@ -4,7 +4,6 @@ import random
 from datetime import datetime, timedelta
 from typing import Dict, Tuple
 
-import click
 import folium
 import folium.features
 import pystac
@@ -202,36 +201,14 @@ def _create_geojson_layer(geojson: Dict, name: str) -> folium.GeoJson:
     )
 
 
-@click.command()
-@click.argument(
-    "geojson_file",
-    type=click.Path(exists=True, readable=True),
-)
-@click.argument("output_file", type=click.Path())
-@click.option(
-    "--catalog",
-    default="https://earth-search.aws.element84.com/v1",
-    help="URL to a public STAC Catalog",
-)
-@click.option(
-    "--collection", default="sentinel-2-l2a", help="STAC Collection ID to search"
-)
-@click.option("--asset-key", default="visual", help="STAC asset key to add to map")
-@click.option(
-    "--name-key",
-    default="Name",
-    help="Key in feature properties to show in map marker popup",
-)
-@click.option("--search-period", default=30, help="Search period (in days)")
-def main(
+def create_stac_tiler_map(
     geojson_file: str,
-    output_file: str,
     catalog: str,
     collection: str,
     asset_key: str,
     name_key: str,
     search_period: int,
-):
+) -> folium.Map:
     logger.info(f"Connecting to STAC Catalog: {catalog}")
     stac_client = pystac_client.Client.open(url=catalog, ignore_conformance=True)
 
@@ -268,11 +245,10 @@ def main(
     )
     marker_layer.add_to(m)
 
+    logger.info("Adding layer controls")
     folium.LayerControl().add_to(m)
 
-    logger.info(f"Saving folium map to {output_file}")
-    m.save(output_file)
+    return m
 
 
-if __name__ == "__main__":
-    main()
+__all__ = ["create_stac_tiler_map"]
