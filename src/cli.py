@@ -14,7 +14,7 @@ logger = logging.getLogger(__file__)
     default=settings.DEFAULT_GEOJSON,
     type=click.Path(exists=True, readable=True),
 )
-@click.argument("output_file", type=click.Path())
+@click.argument("output_file", default=settings.DEFAULT_OUTPUT_FILE, type=click.Path())
 @click.option(
     "--catalog",
     default=settings.DEFAULT_CATALOG,

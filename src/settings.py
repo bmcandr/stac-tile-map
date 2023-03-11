@@ -3,6 +3,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     DEFAULT_GEOJSON: str = "data/national-parks.geojson"
+    DEFAULT_OUTPUT_FILE: str = "map.html"
     DEFAULT_CATALOG: str = "https://earth-search.aws.element84.com/v1"
     DEFAULT_COLLECTION: str = "sentinel-2-l2a"
     DEFAULT_ASSET_KEY: str = "visual"
