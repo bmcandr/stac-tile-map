@@ -9,9 +9,7 @@ jobs:
   update-map:
     runs-on: ubuntu-latest
     env:
-      SCRIPT_NAME: create_map.py
-      GEOJSON_FILE: national-parks.geojson
-      MAP_FILE: map.html
+      SCRIPT_NAME: cli.py
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
