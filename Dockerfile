@@ -8,6 +8,8 @@ COPY requirements-pip.txt  .
 # RUN  pip3 install -r requirements-pip.txt --target "${LAMBDA_TASK_ROOT}"
 RUN  pip3 install -r requirements-pip.txt
 
+# Copy data directory
+COPY data .
 # Copy function code
 COPY src/python app
 
