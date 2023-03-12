@@ -17,7 +17,7 @@ jobs:
           python-version: 3.10.6
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python src/python/$SCRIPT_NAME data/$GEOJSON_FILE $MAP_FILE
+      - run: python src/python/stac-tile-map/$SCRIPT_NAME data/$GEOJSON_FILE $MAP_FILE
       - uses: EndBug/add-and-commit@v9
         with:
           message: "Update map"
