@@ -1,4 +1,4 @@
-FROM python:3.9-slim as requirements-stage
+FROM public.ecr.aws/lambda/python:3.9
 
 WORKDIR /tmp
 
@@ -8,8 +8,6 @@ COPY ./pyproject.toml ./poetry.lock* /tmp/
 
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 
-FROM python:3.9-slim as install
-
 WORKDIR /
 
 COPY --from=requirements-stage /tmp/requirements.txt requirements.txt
@@ -17,11 +15,13 @@ COPY --from=requirements-stage /tmp/requirements.txt requirements.txt
 RUN  pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy data directory
-COPY data data
+COPY data /geojson_data
 
 # Copy function code
 COPY src/python app
 
+# Set python path
 ENV PYTHONPATH=app
 
-CMD ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "app.api.mangum_handler.handler" ]
