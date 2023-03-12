@@ -18,7 +18,7 @@ class MapInputs(BaseModel):
 def app_factory() -> FastAPI:
     app = FastAPI()
 
-    @app.get("/root", response_class=HTMLResponse)
+    @app.get("/", response_class=HTMLResponse)
     async def root():
         m = create_stac_tiler_map(**MapInputs().dict())
 
