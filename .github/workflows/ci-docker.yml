@@ -41,6 +41,6 @@ jobs:
     - name: Update Lambda function code
       id: update-lambda
       env:
-        IMAGE_URI: "${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:$IMAGE_TAG"
+        IMAGE_URI: "${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
       run: |
         aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} --image-uri $IMAGE_URI
