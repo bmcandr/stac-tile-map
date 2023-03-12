@@ -1,0 +1,9 @@
+fastapi
+pystac
+folium
+shapely
+click
+pystac
+magnum
+pydantic
+orjson
