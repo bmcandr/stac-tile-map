@@ -8,3 +8,4 @@ pystac
 mangum
 pydantic
 orjson
+uvicorn

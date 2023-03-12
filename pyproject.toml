@@ -16,6 +16,7 @@ pystac = "^1.7.0"
 pydantic = "^1.10.6"
 orjson = "^3.8.7"
 mangum = "^0.17.0"
+uvicorn = "^0.21.0"
 
 
 [tool.poetry.group.dev.dependencies]
