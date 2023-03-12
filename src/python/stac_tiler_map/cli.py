@@ -1,8 +1,8 @@
-import click
 import logging
 
-from stac_tiler_map import create_stac_tiler_map
+import click
 from settings import settings
+from stac_tiler_map import create_stac_tiler_map
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
