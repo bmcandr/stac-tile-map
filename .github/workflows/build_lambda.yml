@@ -1,11 +1,14 @@
 ---
-name: Pants
+name: CI/CD Pipeline
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: lambda
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
@@ -33,22 +36,35 @@ jobs:
         # Alternatively you change gha-cache-key to ignore old caches.
     - name: Package / Run
       run: |
-        pants --tag="deploy" package ::
+        pants --tag="${{ vars.PACKAGE_TAG }}" package ::
     - name: Upload PEX
       uses: actions/upload-artifact@v3
       with:
-        name: lambda-pex
-        path: dist/src.python.api/stac-tiler-map-api-lambda.zip
+        name: ${{ vars.LAMBDEX_NAME }}
+        path: ${{ vars.LAMBDEX_PATH }}/${{ vars.LAMBDEX_FILENAME }}
     - name: Upload pants log
       uses: actions/upload-artifact@v3
       with:
         name: pants-log
-        path: .pants.d/pants.log
+        path: ${{ vars.PANTS_LOG_PATH }}
       if: always()  # We want the log even on failures.
-    - uses: shallwefootball/s3-upload-action@master
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    environment: lambda
+    env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    steps:
+    - name: Install AWS CLI
+      uses: unfor19/install-aws-cli-action@v1
+    - name: Download Lambdex artifact
+      uses: actions/download-artifact@v2
       with:
-        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-        aws_bucket: ${{ secrets.AWS_BUCKET }}
-        source_dir: 'dist/src.python.api'
-        destination_dir: ''
+        name: ${{ vars.LAMBDEX_NAME }}
+    - name: Upload to S3
+      run: aws s3 cp api.zip s3://${{ secrets.AWS_BUCKET }}/${{ vars.LAMBDEX_FILENAME }}
+    - name: Update Lambda function
+      run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} --s3-bucket ${{ secrets.AWS_BUCKET }} --s3-key ${{ vars.LAMBDEX_FILENAME }}
