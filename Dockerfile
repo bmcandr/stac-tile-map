@@ -9,7 +9,8 @@ COPY requirements-pip.txt  .
 RUN  pip3 install -r requirements-pip.txt
 
 # Copy data directory
-COPY data .
+COPY data /geojson_data
+
 # Copy function code
 COPY src/python app
 
