@@ -6,7 +6,7 @@ authors = ["Brendan McAndrew <19274445+bmcandr@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10.6"
+python = "^3.9"
 pystac-client = "^0.6.0"
 folium = "^0.14.0"
 shapely = "^2.0.1"
