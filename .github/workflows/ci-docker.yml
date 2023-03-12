@@ -38,3 +38,9 @@ jobs:
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    - name: Update Lambda function code
+      id: update-lambda
+      env:
+        IMAGE_URI: "${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:$IMAGE_TAG"
+      run: |
+        aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} --image-uri $IMAGE_URI
