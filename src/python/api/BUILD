@@ -8,7 +8,7 @@ pex_binary(
 
 python_awslambda(
     name="stac-tiler-map-api-lambda",
-    runtime="python3.10",
+    runtime="python3.9",
     handler="main.py:handler",
     tags=["deploy"],
 )
