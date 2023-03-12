@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: lambda-pex
-        path: dist/src.python.api/stac-tiler-map-api-lambda.zip.pex
+        path: dist/src.python.api/stac-tiler-map-api-lambda.zip
     - name: Upload pants log
       uses: actions/upload-artifact@v3
       with:
