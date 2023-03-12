@@ -1,7 +1,7 @@
 [GLOBAL]
 pants_version = "2.15.0"
 
-backend_packages = ["pants.backend.python"]
+backend_packages = ["pants.backend.python", "pants.backend.awslambda.python"]
 
 [python]
 interpreter_constraints = ["==3.10.*"]

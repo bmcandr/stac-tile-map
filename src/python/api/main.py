@@ -1,7 +1,13 @@
+import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from settings import settings
+
+try:
+    from magnum import Magnum
+except ModuleNotFoundError:
+    pass
 
 from stac_tiler_map.create_map import create_stac_tiler_map
 
@@ -29,3 +35,7 @@ async def create_custom_map(inputs: MapInputs):
     m = create_stac_tiler_map(**inputs.dict())
 
     return HTMLResponse(m.get_root().render())
+
+
+if "magnum" in sys.modules:
+    handler = Magnum(app, lifespan="off")
