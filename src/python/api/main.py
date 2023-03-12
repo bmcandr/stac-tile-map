@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from settings import settings
+
 from stac_tiler_map.create_map import create_stac_tiler_map
 
 app = FastAPI()

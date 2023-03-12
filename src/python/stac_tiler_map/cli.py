@@ -2,6 +2,7 @@ import logging
 
 import click
 from settings import settings
+
 from stac_tiler_map import create_stac_tiler_map
 
 logging.basicConfig(level=logging.INFO)
