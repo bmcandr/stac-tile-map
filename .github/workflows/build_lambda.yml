@@ -65,6 +65,6 @@ jobs:
       with:
         name: ${{ vars.LAMBDEX_NAME }}
     - name: Upload to S3
-      run: aws s3 cp api.zip s3://${{ secrets.AWS_BUCKET }}/${{ vars.LAMBDEX_FILENAME }}
+      run: aws s3 cp ${{ vars.LAMBDEX_FILENAME }} s3://${{ secrets.AWS_BUCKET }}/${{ vars.LAMBDEX_FILENAME }}
     - name: Update Lambda function
       run: aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} --s3-bucket ${{ secrets.AWS_BUCKET }} --s3-key ${{ vars.LAMBDEX_FILENAME }}
