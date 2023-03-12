@@ -1,5 +1,5 @@
 ---
-name: CI/CD Pipeline
+name: Pants CI/CD Pipeline
 on:
   push:
     branches:
