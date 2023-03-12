@@ -9,15 +9,17 @@ jobs:
   update-map:
     runs-on: ubuntu-latest
     env:
+      SOURCE_PATH: src/python
       SCRIPT_NAME: cli.py
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.10.6
+          python-version: 3.9.*
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python src/python/stac_tiler_map/$SCRIPT_NAME data/$GEOJSON_FILE $MAP_FILE
+      - run: PYTHONPATH=$SOURCE_PATH python $SOURCE_PATH/stac_tiler_map/$SCRIPT_NAME
       - uses: EndBug/add-and-commit@v9
         with:
           message: "Update map"
