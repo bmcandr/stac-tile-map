@@ -1,12 +1,9 @@
-import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from settings import settings
 
-from stac_tiler_map.create_map import create_stac_tiler_map
-
-app = FastAPI()
+from stac_tiler_map import create_stac_tiler_map
 
 
 class MapInputs(BaseModel):
@@ -18,15 +15,28 @@ class MapInputs(BaseModel):
     search_period: int = settings.DEFAULT_SEARCH_PERIOD
 
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    m = create_stac_tiler_map(**MapInputs().dict())
+def app_factory() -> FastAPI:
+    app = FastAPI()
 
-    return HTMLResponse(m.get_root().render())
+    @app.get("/root", response_class=HTMLResponse)
+    async def root():
+        m = create_stac_tiler_map(**MapInputs().dict())
+
+        return HTMLResponse(m.get_root().render())
+
+    @app.get("/custom", response_class=HTMLResponse)
+    async def create_custom_map(inputs: MapInputs):
+        m = create_stac_tiler_map(**inputs.dict())
+
+        return HTMLResponse(m.get_root().render())
+
+    return app
 
 
-@app.get("/custom", response_class=HTMLResponse)
-async def create_custom_map(inputs: MapInputs):
-    m = create_stac_tiler_map(**inputs.dict())
+app = app_factory()
 
-    return HTMLResponse(m.get_root().render())
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=9000)

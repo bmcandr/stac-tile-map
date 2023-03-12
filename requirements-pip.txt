@@ -1,9 +1,10 @@
 fastapi
 pystac
+pystac-client
 folium
 shapely
 click
 pystac
-magnum
+mangum
 pydantic
 orjson
