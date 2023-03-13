@@ -1,6 +1,6 @@
 # STAC+COG Map
 
-[![pages-build-deployment](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment)
+[![Docker CI/CD Pipeline](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml)
 
 **TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random National Park!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/) Refresh for a new map.
 
