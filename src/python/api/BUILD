@@ -5,12 +5,12 @@ pex_binary(
     script="uvicorn",
     dependencies=[":api", "src/python/settings.py"],
     platforms=["current"],
-    tags=["smoke-test"],
+    tags=["pex"],
 )
 
 python_awslambda(
     name="stac-tiler-map-api-lambda",
     runtime="python3.9",
     handler="api.magnum_handler:handler",
-    tags=["deploy"],
+    tags=["lambdex"],
 )
