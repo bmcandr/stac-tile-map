@@ -2,7 +2,7 @@
 
 [![pages-build-deployment](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/pages/pages-build-deployment)
 
-**TLDR;** [click here to view the map!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/)
+**TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random National Park!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/) Refresh for a new map.
 
 ## Overview
 
@@ -13,6 +13,8 @@ The code contained here:
 * creates a `folium` map with a tile layer displaying a Cloud Optimized GeoTiff hosted in the [AWS Registry of Open Data](https://registry.opendata.aws/sentinel-2-l2a-cogs/) served via [Development Seed's](https://developmentseed.org/) public [COG tiler]
 
 There is a CLI to generate a standalone HTML file and a FastAPI app for dynamically generating maps.
+
+The FastAPI app is deployed to an AWS Lambda function using GitHub Actions.
 
 ## Setup
 
@@ -53,7 +55,7 @@ There are several ways to run the FastAPI app locally: Python, `uvicorn`, Docker
 
 ### Deploying to AWS
 
-I use a GitHub Actions workflow (`.github/workflows/ci-docker-lambda.yml`) to deploy the FastAPI app as a Docker-based AWS Lambda function. The workflow builds an image based on Dockerfile.aws.lambda, pushes the image to Elastic Container Registry, and updates the Lambda function with the new image. Neat!
+I use a GitHub Actions workflow (`.github/workflows/ci-docker-lambda.yml`) to deploy the FastAPI app as a Docker-based AWS Lambda function. The GHA workflow builds an image from `Dockerfile.aws.lambda`, pushes the image to Elastic Container Registry, and updates the Lambda function with the new image. The link at the top of this is served by the Lambda function. Serverless is neat!
 
 ### Problems
 
