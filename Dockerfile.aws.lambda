@@ -1,18 +1,12 @@
-FROM python:3.9 as requirements-stage
-
-WORKDIR /tmp
+FROM public.ecr.aws/lambda/python:3.9
 
 RUN pip install poetry
 
-COPY ./pyproject.toml ./poetry.lock* /tmp/
+COPY pyproject.toml .
+
+COPY poetry.lock* .
 
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-FROM public.ecr.aws/lambda/python:3.9
-
-WORKDIR /
-
-COPY --from=requirements-stage /tmp/requirements.txt requirements.txt
 
 RUN  pip3 install --no-cache-dir --upgrade -r requirements.txt
 
