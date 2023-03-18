@@ -8,6 +8,7 @@ import folium
 import folium.features
 import pystac
 import pystac_client
+from dateutil import parser
 from shapely import geometry
 
 logging.basicConfig(level=logging.INFO)
@@ -157,12 +158,7 @@ def _create_tile_layer_from_item(
     )
 
 
-def _add_stac_info_to_feature(
-    feature: Dict,
-    item_id: str,
-    item_href: str,
-    asset_href: str,
-) -> Dict:
+def _add_stac_info_to_feature(feature: Dict, item: pystac.Item, asset_key: str) -> Dict:
     """Adds link to STAC Item and asset download to feature.
 
     :param feature: GeoJSON Feature dictionary.
@@ -177,11 +173,20 @@ def _add_stac_info_to_feature(
     :rtype: Dict
     """
     link_str = "<a target='_blank' href={href}>{label}</a>"
+
+    item_id = item.id
+    item_href = item.self_href
+    asset_href = item.assets[asset_key].href
+    date = parser.parse(item.properties["datetime"]).date()
+
     update_dict = {
+        "Date": date.strftime("%Y-%m-%d"),
         "STAC Item": link_str.format(href=item_href, label=item_id),
         "Download": link_str.format(href=asset_href, label="click here"),
     }
+
     feature["properties"].update(update_dict)
+
     return feature
 
 
@@ -234,10 +239,7 @@ def create_stac_tiler_map(
 
     logger.info("Adding STAC info to feature")
     updated_feature = _add_stac_info_to_feature(
-        feature=feature.copy(),
-        item_id=scene_item.id,
-        item_href=scene_item.self_href,
-        asset_href=scene_item.assets[asset_key].href,
+        feature=feature.copy(), item=scene_item, asset_key=asset_key
     )
     logger.info("Adding GeoJSON layer to map")
     marker_layer = _create_geojson_layer(
