@@ -11,7 +11,7 @@ RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
 RUN  pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy data directory
-COPY data /geojson_data
+COPY data data
 
 # Copy function code
 COPY src/python app
