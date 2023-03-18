@@ -1,4 +1,5 @@
 import logging
+from typing import Union
 
 import click
 from schemas import CliInputs
@@ -13,9 +14,9 @@ cli_inputs = CliInputs()
 
 @click.command()
 @click.argument(
-    "geojson_file",
+    "geojson_path",
     default=cli_inputs.geojson,
-    type=click.Path(exists=True, readable=True),
+    type=str,
 )
 @click.argument("output_file", default=cli_inputs.output_file, type=click.Path())
 @click.option(
@@ -39,7 +40,7 @@ cli_inputs = CliInputs()
     help="Search period (in days)",
 )
 def main(
-    geojson_file: str,
+    geojson_path: str,
     output_file: str,
     catalog: str,
     collection: str,
@@ -47,7 +48,7 @@ def main(
     search_period: int,
 ):
     m = create_stac_tiler_map(
-        geojson_file=geojson_file,
+        geojson_path=geojson_path,
         catalog=catalog,
         collection=collection,
         asset_key=asset_key,

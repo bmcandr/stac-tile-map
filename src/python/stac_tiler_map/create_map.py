@@ -1,6 +1,7 @@
 import json
 import logging
 import random
+import requests
 from datetime import datetime, timedelta
 from typing import Dict, Tuple
 
@@ -15,17 +16,49 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 
-def _get_random_feature(geojson_fp: str) -> Dict:
+def read_local_geojson(path: str) -> Dict:
+    """Read a local GeoJSON file.
+
+    :param path: Path pointing to the file.
+    :type path: str
+    :return: GeoJSON as dictionary.
+    :rtype: Dict
+    """
+    with open(path, "r") as fp:
+        geojson = json.load(fp)
+
+    return geojson
+
+
+def read_remote_geojson(url: str) -> Dict:
+    """Read a remote GeoJSON file.
+
+    :param url: URL pointing to the file.
+    :type url: str
+    :return: GeoJSON as dictionary.
+    :rtype: Dict
+    """
+    resp = requests.get(url=url)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def _get_random_feature(geojson_path: str) -> Dict:
     """Picks a random feature from a GeoJSON file.
 
-    :param geojson_fp: Path to a GeoJSON file.
-    :type geojson_fp: str
+    :param geojson_path: Path or URI to a GeoJSON file.
+    :type geojson_path: str
     :return: A dictionary containing a GeoJSON feature.
     :rtype: Dict
     """
-    logger.info(f"Picking random feature from {geojson_fp}")
-    with open(geojson_fp, "r") as fp:
-        geojson = json.load(fp)
+
+    read_geojson = (
+        read_remote_geojson
+        if geojson_path.startswith(("http", "www"))
+        else read_local_geojson
+    )
+
+    geojson = read_geojson(geojson_path)
 
     features = geojson["features"]
 
@@ -207,7 +240,7 @@ def _create_geojson_layer(geojson: Dict, name: str) -> folium.GeoJson:
 
 
 def create_stac_tiler_map(
-    geojson_file: str,
+    geojson_path: str,
     catalog: str,
     collection: str,
     asset_key: str,
@@ -216,7 +249,7 @@ def create_stac_tiler_map(
     logger.info(f"Connecting to STAC Catalog: {catalog}")
     stac_client = pystac_client.Client.open(url=catalog, ignore_conformance=True)
 
-    feature = _get_random_feature(geojson_fp=geojson_file)
+    feature = _get_random_feature(geojson_path=geojson_path)
     logger.info(f"Feature selected: {feature['properties']}")
 
     scene_item = _get_scene(
