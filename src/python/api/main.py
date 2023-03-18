@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import APIRouter, Depends, FastAPI
 from fastapi.responses import HTMLResponse
 from schemas import Inputs
 
@@ -6,16 +6,10 @@ from stac_tiler_map import create_stac_tiler_map
 
 
 def app_factory() -> FastAPI:
-    app = FastAPI()
+    app = FastAPI(title="STAC+GeoJSON+COG+Tiler Demo")
 
-    @app.get("/", response_class=HTMLResponse)
-    async def root():
-        m = create_stac_tiler_map(Inputs())
-
-        return HTMLResponse(m.get_root().render())
-
-    @app.get("/custom", response_class=HTMLResponse)
-    async def create_custom_map(inputs: Inputs = Depends()):
+    @app.get("/map", tags=["maps"], response_class=HTMLResponse)
+    async def create_map(inputs: Inputs = Depends()):
         m = create_stac_tiler_map(inputs)
 
         return HTMLResponse(m.get_root().render())
