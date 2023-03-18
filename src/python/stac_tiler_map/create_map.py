@@ -1,7 +1,6 @@
 import json
 import logging
 import random
-import requests
 from datetime import datetime, timedelta
 from typing import Dict, Tuple
 
@@ -9,10 +8,10 @@ import folium
 import folium.features
 import pystac
 import pystac_client
+import requests
 from dateutil import parser
-from shapely import geometry
-
 from schemas import Inputs
+from shapely import geometry
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
