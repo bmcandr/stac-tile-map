@@ -211,15 +211,13 @@ def create_stac_tiler_map(
     catalog: str,
     collection: str,
     asset_key: str,
-    name_key: str,
     search_period: int,
 ) -> folium.Map:
     logger.info(f"Connecting to STAC Catalog: {catalog}")
     stac_client = pystac_client.Client.open(url=catalog, ignore_conformance=True)
 
     feature = _get_random_feature(geojson_fp=geojson_file)
-    feature_name = feature["properties"][name_key]
-    logger.info(f"Feature selected: {feature_name}")
+    logger.info(f"Feature selected: {feature['properties']}")
 
     scene_item = _get_scene(
         stac_client=stac_client,

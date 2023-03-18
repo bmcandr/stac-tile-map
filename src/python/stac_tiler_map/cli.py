@@ -1,44 +1,41 @@
 import logging
 
 import click
-from settings import settings
+from schemas import CliInputs
 
 from stac_tiler_map import create_stac_tiler_map
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
+cli_inputs = CliInputs()
+
 
 @click.command()
 @click.argument(
     "geojson_file",
-    default=settings.DEFAULT_GEOJSON,
+    default=cli_inputs.geojson,
     type=click.Path(exists=True, readable=True),
 )
-@click.argument("output_file", default=settings.DEFAULT_OUTPUT_FILE, type=click.Path())
+@click.argument("output_file", default=cli_inputs.output_file, type=click.Path())
 @click.option(
     "--catalog",
-    default=settings.DEFAULT_CATALOG,
+    default=cli_inputs.catalog,
     help="URL to a public STAC Catalog",
 )
 @click.option(
     "--collection",
-    default=settings.DEFAULT_COLLECTION,
+    default=cli_inputs.collection,
     help="STAC Collection ID to search",
 )
 @click.option(
     "--asset-key",
-    default=settings.DEFAULT_ASSET_KEY,
+    default=cli_inputs.asset_key,
     help="STAC asset key to add to map",
 )
 @click.option(
-    "--name-key",
-    default=settings.DEFAULT_NAME_KEY,
-    help="Key in feature properties to show in map marker popup",
-)
-@click.option(
     "--search-period",
-    default=settings.DEFAULT_SEARCH_PERIOD,
+    default=cli_inputs.search_period,
     help="Search period (in days)",
 )
 def main(
@@ -47,7 +44,6 @@ def main(
     catalog: str,
     collection: str,
     asset_key: str,
-    name_key: str,
     search_period: int,
 ):
     m = create_stac_tiler_map(
@@ -55,7 +51,6 @@ def main(
         catalog=catalog,
         collection=collection,
         asset_key=asset_key,
-        name_key=name_key,
         search_period=search_period,
     )
 

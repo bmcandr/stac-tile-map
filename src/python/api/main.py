@@ -1,18 +1,8 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
-from settings import settings
+from schemas import Inputs
 
 from stac_tiler_map import create_stac_tiler_map
-
-
-class MapInputs(BaseModel):
-    geojson_file: str = settings.DEFAULT_GEOJSON
-    catalog: str = settings.DEFAULT_CATALOG
-    collection: str = settings.DEFAULT_COLLECTION
-    asset_key: str = settings.DEFAULT_ASSET_KEY
-    name_key: str = settings.DEFAULT_NAME_KEY
-    search_period: int = settings.DEFAULT_SEARCH_PERIOD
 
 
 def app_factory() -> FastAPI:
@@ -20,12 +10,12 @@ def app_factory() -> FastAPI:
 
     @app.get("/", response_class=HTMLResponse)
     async def root():
-        m = create_stac_tiler_map(**MapInputs().dict())
+        m = create_stac_tiler_map(**Inputs().dict())
 
         return HTMLResponse(m.get_root().render())
 
-    @app.post("/custom", response_class=HTMLResponse)
-    async def create_custom_map(inputs: MapInputs):
+    @app.get("/custom", response_class=HTMLResponse)
+    async def create_custom_map(inputs: Inputs = Depends()):
         m = create_stac_tiler_map(**inputs.dict())
 
         return HTMLResponse(m.get_root().render())
