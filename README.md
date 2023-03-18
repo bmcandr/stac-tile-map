@@ -10,9 +10,9 @@ The code contained here:
 
 * loads a GeoJSON file and randomly selects a feature
 * searches [Element 84's EarthSearch STAC Catalog](https://earth-search.aws.element84.com/v1) for the most recent Sentinel-2 L2A scenes that intersect the selected geometry
-* creates a `folium` map with a tile layer displaying a Cloud Optimized GeoTiff hosted in the [AWS Registry of Open Data](https://registry.opendata.aws/sentinel-2-l2a-cogs/) served via [Development Seed's](https://developmentseed.org/) public [COG tiler]
+* creates a `folium` map with a tile layer displaying a Cloud Optimized GeoTiff hosted in the [AWS Registry of Open Data](https://registry.opendata.aws/sentinel-2-l2a-cogs/) served via [Development Seed's](https://developmentseed.org/) public [COG tiler](https://api.cogeo.xyz).
 
-There is a CLI to generate a standalone HTML file and a FastAPI app for dynamically generating maps.
+There is a CLI to generate a standalone HTML file and a FastAPI app for dynamically generating maps ([docs](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/docs)).
 
 The FastAPI app is deployed to an AWS Lambda function using GitHub Actions.
 
