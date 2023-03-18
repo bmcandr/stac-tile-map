@@ -24,7 +24,7 @@ def app_factory() -> FastAPI:
 
         return HTMLResponse(m.get_root().render())
 
-    @app.get("/custom", response_class=HTMLResponse)
+    @app.post("/custom", response_class=HTMLResponse)
     async def create_custom_map(inputs: MapInputs):
         m = create_stac_tiler_map(**inputs.dict())
 
