@@ -10,13 +10,13 @@ def app_factory() -> FastAPI:
 
     @app.get("/", response_class=HTMLResponse)
     async def root():
-        m = create_stac_tiler_map(**Inputs().dict())
+        m = create_stac_tiler_map(Inputs())
 
         return HTMLResponse(m.get_root().render())
 
     @app.get("/custom", response_class=HTMLResponse)
     async def create_custom_map(inputs: Inputs = Depends()):
-        m = create_stac_tiler_map(**inputs.dict())
+        m = create_stac_tiler_map(inputs)
 
         return HTMLResponse(m.get_root().render())
 
