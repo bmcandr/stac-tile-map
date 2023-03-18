@@ -1,24 +1,23 @@
 import logging
-from typing import Union
 
 import click
-from schemas import CliInputs
+from schemas import Inputs
 
 from stac_tiler_map import create_stac_tiler_map
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
-cli_inputs = CliInputs()
+cli_inputs = Inputs()
 
 
 @click.command()
 @click.argument(
     "geojson_path",
-    default=cli_inputs.geojson,
+    default=cli_inputs.geojson_path,
     type=str,
 )
-@click.argument("output_file", default=cli_inputs.output_file, type=click.Path())
+@click.argument("output_file", default="map.html", type=click.Path())
 @click.option(
     "--catalog",
     default=cli_inputs.catalog,
@@ -47,13 +46,14 @@ def main(
     asset_key: str,
     search_period: int,
 ):
-    m = create_stac_tiler_map(
+    inputs = Inputs(
         geojson_path=geojson_path,
         catalog=catalog,
         collection=collection,
         asset_key=asset_key,
         search_period=search_period,
     )
+    m = create_stac_tiler_map(inputs=inputs)
 
     logger.info(f"Saving folium map to {output_file}")
     m.save(outfile=output_file)

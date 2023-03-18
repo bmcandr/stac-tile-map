@@ -12,6 +12,8 @@ import pystac_client
 from dateutil import parser
 from shapely import geometry
 
+from schemas import Inputs
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
@@ -239,24 +241,19 @@ def _create_geojson_layer(geojson: Dict, name: str) -> folium.GeoJson:
     )
 
 
-def create_stac_tiler_map(
-    geojson_path: str,
-    catalog: str,
-    collection: str,
-    asset_key: str,
-    search_period: int,
-) -> folium.Map:
-    logger.info(f"Connecting to STAC Catalog: {catalog}")
-    stac_client = pystac_client.Client.open(url=catalog, ignore_conformance=True)
+def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
+    logger.info(f"Connecting to STAC Catalog: {inputs.catalog}")
+    stac_client = pystac_client.Client.open(url=inputs.catalog, ignore_conformance=True)
 
-    feature = _get_random_feature(geojson_path=geojson_path)
+    logger.info(f"Selecting random feature from {inputs.geojson_path}")
+    feature = _get_random_feature(geojson_path=inputs.geojson_path)
     logger.info(f"Feature selected: {feature['properties']}")
 
     scene_item = _get_scene(
         stac_client=stac_client,
-        collection=collection,
+        collection=inputs.collection,
         end_date=datetime.utcnow(),
-        search_period=search_period,
+        search_period=inputs.search_period,
         intersects=feature["geometry"],
     )
 
@@ -265,12 +262,14 @@ def create_stac_tiler_map(
     m = _create_map(location=(scene_centroid.y, scene_centroid.x))
 
     logger.info(f"Adding scene {scene_item.id} to map")
-    tile_layer = _create_tile_layer_from_item(item=scene_item, asset_key=asset_key)
+    tile_layer = _create_tile_layer_from_item(
+        item=scene_item, asset_key=inputs.asset_key
+    )
     tile_layer.add_to(m)
 
     logger.info("Adding STAC info to feature")
     updated_feature = _add_stac_info_to_feature(
-        feature=feature.copy(), item=scene_item, asset_key=asset_key
+        feature=feature.copy(), item=scene_item, asset_key=inputs.asset_key
     )
     logger.info("Adding GeoJSON layer to map")
     marker_layer = _create_geojson_layer(
