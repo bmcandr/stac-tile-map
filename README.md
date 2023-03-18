@@ -2,7 +2,9 @@
 
 [![Docker CI/CD Pipeline](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml)
 
-**TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random National Park!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/map) Refresh for a new map.
+**TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random populated place*!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/map) Refresh for a new map.
+
+_* [data source](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/)_
 
 ## Overview
 
