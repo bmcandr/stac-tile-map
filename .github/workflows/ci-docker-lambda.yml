@@ -11,6 +11,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: lambda
+    env:
+      IMAGE_URI: "${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -46,13 +48,11 @@ jobs:
         context: .
         file: Dockerfile.aws.lambda
         push: true
-        tags: "${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
+        tags: $IMAGE_URI
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
     - name: Update Lambda function code
       id: update-lambda
-      env:
-        IMAGE_URI: "${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
       run: |
         aws lambda update-function-code --function-name ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }} --image-uri $IMAGE_URI
