@@ -43,7 +43,7 @@ jobs:
         context: .
         file: Dockerfile.aws.lambda
         push: true
-        tags: "${{ steps.login-ecr.outputs.registry }}/ ${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
+        tags: "${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
