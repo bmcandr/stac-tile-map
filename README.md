@@ -2,7 +2,7 @@
 
 [![Docker CI/CD Pipeline](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml)
 
-**TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random populated place*!](https://d2vj242qcpedin.cloudfront.net/map) Refresh for a new map.
+**TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random populated place*!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/map) Refresh for a new map.
 
 _* [data source](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-populated-places/)_
 
@@ -14,7 +14,7 @@ The code contained here:
 * searches [Element 84's EarthSearch STAC Catalog](https://earth-search.aws.element84.com/v1) for the most recent Sentinel-2 L2A scenes that intersect the selected geometry
 * creates a `folium` map with a tile layer displaying a Cloud Optimized GeoTiff hosted in the [AWS Registry of Open Data](https://registry.opendata.aws/sentinel-2-l2a-cogs/) served via [Development Seed's](https://developmentseed.org/) public [COG tiler](https://api.cogeo.xyz).
 
-There is a CLI to generate a standalone HTML file and a FastAPI app for dynamically generating maps ([Swagger docs](https://d2vj242qcpedin.cloudfront.net/docs)).
+There is a CLI to generate a standalone HTML file and a FastAPI app for dynamically generating maps ([docs](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/docs)).
 
 The FastAPI app is deployed to an AWS Lambda function using GitHub Actions.
 
