@@ -46,7 +46,7 @@ jobs:
         context: .
         file: Dockerfile.aws.lambda
         push: true
-        tags: "${{ secrets.AWS_ECR_REGISTRY }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
+        tags: "${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}"
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
