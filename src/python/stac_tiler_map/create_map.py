@@ -20,11 +20,17 @@ logger = logging.getLogger(__file__)
 def read_local_geojson(path: str) -> Dict:
     """Read a local GeoJSON file.
 
-    :param path: Path pointing to the file.
-    :type path: str
-    :return: GeoJSON as dictionary.
-    :rtype: Dict
+    Parameters
+    ----------
+    path : str
+        Path pointing to the file.
+
+    Returns
+    -------
+    Dict
+        The GeoJSON content.
     """
+
     with open(path, "r") as fp:
         geojson = json.load(fp)
 
@@ -34,11 +40,17 @@ def read_local_geojson(path: str) -> Dict:
 def read_remote_geojson(url: str) -> Dict:
     """Read a remote GeoJSON file.
 
-    :param url: URL pointing to the file.
-    :type url: str
-    :return: GeoJSON as dictionary.
-    :rtype: Dict
+    Parameters
+    ----------
+    url : str
+        URL pointing to the file.
+
+    Returns
+    -------
+    Dict
+        The GeoJSON content.
     """
+
     resp = requests.get(url=url)
     resp.raise_for_status()
     return resp.json()
@@ -47,10 +59,15 @@ def read_remote_geojson(url: str) -> Dict:
 def _get_random_feature(geojson_path: str) -> Dict:
     """Picks a random feature from a GeoJSON file.
 
-    :param geojson_path: Path or URI to a GeoJSON file.
-    :type geojson_path: str
-    :return: A dictionary containing a GeoJSON feature.
-    :rtype: Dict
+    Parameters
+    ----------
+    geojson_path : str
+        Path or URI to a GeoJSON file.
+
+    Returns
+    -------
+    Dict
+        A dictionary containing a GeoJSON Feature.
     """
 
     read_geojson = (
@@ -70,13 +87,19 @@ def _get_search_dates(end_date: datetime, period: int = 1) -> str:
     """Generate a STAC search compliant datetime string (e.g., "2022-12-01/2023-01-01").
     Search start date is calculated by subtracting the period in days from the end date.
 
-    :param end_date: The end date of the search period.
-    :type end_date: datetime
-    :param period: Search period in days, defaults to 1
-    :type period: int, optional
-    :return: A STAC search compliant datetime string (e.g., "2022-12-01/2023-01-01")
-    :rtype: str
+    Parameters
+    ----------
+    end_date : datetime
+        The end date of the search period.
+    period : int, optional
+        Search period in days, by default 1.
+
+    Returns
+    -------
+    str
+        A STAC search compliant datetime string (e.g., "2022-12-01/2023-01-01").
     """
+
     search_period = timedelta(days=period)
     start_date = end_date - search_period
     start_date_str, end_date_str = [
@@ -97,19 +120,25 @@ def _get_scene(
     If nothing found in first search, search iterates backwards in time
     by search period (and lightly loosens cloud cover query criteria).
 
-    :param stac_client: A STAC client.
-    :type stac_client: pystac_client.Client
-    :param collection: STAC collection to search.
-    :type collection: str
-    :param end_date: End date of the search period (e.g., today)
-    :type end_date: datetime
-    :param search_period: Length of search period in days.
-    :type search_period: int
-    :param intersects: GeoJSON geometry or object that implements __geo_interface__
-    :type intersects: Dict
-    :return: A pystac Item matching the search criteria, sorted by nodata percentage and cloud coverage.
-    :rtype: pystac.Item
+    Parameters
+    ----------
+    stac_client : pystac_client.Client
+        A STAC client.
+    collection : str
+        STAC collection to search.
+    end_date : datetime
+        End date of the search period (e.g., today)
+    search_period : int
+        Length of search period (in days).
+    intersects : Dict
+        GeoJSON geometry or object that implements __geo_interface__
+
+    Returns
+    -------
+    pystac.Item
+        A STAC Item that meets the search criteria.
     """
+
     query_keys = ["s2:nodata_pixel_percentage", "eo:cloud_cover"]
     query_criteria = {"gte": 0, "lte": 10}
     query = {query_key: query_criteria for query_key in query_keys}
@@ -154,15 +183,21 @@ def _create_map(
 ) -> folium.Map:
     """Create a folium map.
 
-    :param location: (lon, lat) to center map on.
-    :type location: Tuple[float, float]
-    :param tiles: One of folium's built-in tilesets, defaults to "cartodbpositron"
-    :type tiles: str, optional
-    :param zoom_start: Zoom level, defaults to 10
-    :type zoom_start: int, optional
-    :return: A folium map object.
-    :rtype: folium.Map
+    Parameters
+    ----------
+    location : Tuple[float, float]
+        (lon, lat) to center map on.
+    tiles : str, optional
+        One of folium's built-in tilesets, by default "cartodbpositron"
+    zoom_start : int, optional
+        Zoom level, by default 10
+
+    Returns
+    -------
+    folium.Map
+        A map object.
     """
+
     return folium.Map(
         location=location,
         tiles=tiles,
@@ -177,15 +212,21 @@ def _create_tile_layer_from_item(
 ) -> folium.TileLayer:
     """Create a map tile layer from a COG-containing STAC Item.
 
-    :param item: STAC Item with COG asset to add to tile layer.
-    :type item: pystac.Item
-    :param asset_key: Key of asset to tile on layer.
-    :type asset_key: str
-    :param tiler_url: URL to the tiler, defaults to DevSeed's awesome free tiler "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}"
-    :type tiler_url: str, optional
-    :return: Tile layer displaying COG asset.
-    :rtype: folium.TileLayer
+    Parameters
+    ----------
+    item : pystac.Item
+        STAC Item with COG asset to add to tile layer.
+    asset_key : str
+        Key of asset to tile on layer.
+    tiler_url : str, optional
+        URL to the tiler, defaults to DevSeed's awesome free tiler "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}".
+
+    Returns
+    -------
+    folium.TileLayer
+        Tile layer displaying COG asset.
     """
+
     virtual_tiles = f"{tiler_url}?url={item.assets[asset_key].href}"
     return folium.TileLayer(
         tiles=virtual_tiles, name="COG", overlay=True, attr="IndigoAg"
@@ -195,17 +236,21 @@ def _create_tile_layer_from_item(
 def _add_stac_info_to_feature(feature: Dict, item: pystac.Item, asset_key: str) -> Dict:
     """Adds link to STAC Item and asset download to feature.
 
-    :param feature: GeoJSON Feature dictionary.
-    :type feature: Dict
-    :param item_id: STAC Item ID.
-    :type item_id: str
-    :param item_href: Self link to STAC Item.
-    :type item_href: str
-    :param asset_href: Link to asset.
-    :type asset_href: str
-    :return: Updated feature with STAC properties.
-    :rtype: Dict
+    Parameters
+    ----------
+    feature : Dict
+        GeoJSON Feature dictionary.
+    item : pystac.Item
+        STAC Item to extract information from.
+    asset_key : str
+        Key to asset in STAC Item.
+
+    Returns
+    -------
+    Dict
+        Dictionary of formatted information about feature and STAC Item.
     """
+
     link_str = "<a target='_blank' href={href}>{label}</a>"
 
     item_id = item.id
@@ -227,13 +272,19 @@ def _add_stac_info_to_feature(feature: Dict, item: pystac.Item, asset_key: str) 
 def _create_geojson_layer(geojson: Dict, name: str) -> folium.GeoJson:
     """Create a folium layer from GeoJSON dictionary.
 
-    :param geojson: A GeoJSON-like dictionary.
-    :type geojson: Dict
-    :param name: Layer name
-    :type name: str
-    :return: _description_
-    :rtype: folium.GeoJson
+    Parameters
+    ----------
+    geojson : Dict
+        A GeoJSON-like dictionary.
+    name : str
+        Layer name.
+
+    Returns
+    -------
+    folium.GeoJson
+        A GeoJSON map layer.
     """
+
     popup_fields = list(geojson["features"][0]["properties"].keys())
     return folium.GeoJson(
         geojson, name=name, popup=folium.GeoJsonPopup(fields=popup_fields)
@@ -241,6 +292,18 @@ def _create_geojson_layer(geojson: Dict, name: str) -> folium.GeoJson:
 
 
 def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
+    """Creates a folium map object displaying a COG.
+
+    Parameters
+    ----------
+    inputs : Inputs
+        Map generation inputs.
+
+    Returns
+    -------
+    folium.Map
+        A map displaying COG and STAC info.
+    """
     logger.info(f"Connecting to STAC Catalog: {inputs.catalog}")
     stac_client = pystac_client.Client.open(url=inputs.catalog, ignore_conformance=True)
 
