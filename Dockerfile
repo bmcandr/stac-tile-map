@@ -1,20 +1,17 @@
-FROM python:3.9-slim as requirements-stage
+FROM python:3.9-slim AS builder
 
-WORKDIR /tmp
+RUN pip install -U pip
+RUN pip install pdm
 
-RUN pip install poetry
+COPY pyproject.toml pdm.lock /
 
-COPY ./pyproject.toml ./poetry.lock* /tmp/
+RUN pdm install --prod --no-self --no-lock --no-editable
 
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
-
-FROM python:3.9-slim as install
+FROM python:3.9-slim
 
 WORKDIR /
 
-COPY --from=requirements-stage /tmp/requirements.txt requirements.txt
-
-RUN  pip3 install --no-cache-dir --upgrade -r requirements.txt
+COPY --from=builder /.venv .venv
 
 # Copy data directory
 COPY data data
@@ -22,6 +19,7 @@ COPY data data
 # Copy function code
 COPY src/python app
 
+ENV PATH=.venv/bin:$PATH
 ENV PYTHONPATH=app
 
-CMD ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD uvicorn app.api.main:app --host 0.0.0.0 --port 8080
