@@ -14,7 +14,7 @@ COPY data data
 COPY src/python app
 
 # Add venv to PATH
-ENV PATH=.venv/bin:$PATH
+ENV PATH=/.venv/bin:$PATH
 # Set python path
 ENV PYTHONPATH=app
 
