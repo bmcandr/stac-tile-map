@@ -5,7 +5,9 @@ RUN pip install pdm
 
 COPY pyproject.toml pdm.lock /
 
-RUN pdm install --prod --no-self --no-lock --no-editable
+RUN pdm export --without-hashes -f requirements > requirements.txt
+
+RUN  pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy data directory
 COPY data data
@@ -13,11 +15,8 @@ COPY data data
 # Copy function code
 COPY src/python app
 
-# Add venv to PATH
-ENV PATH=/.venv/bin:$PATH
 # Set python path
 ENV PYTHONPATH=app
-
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "app.api.mangum_handler.handler" ]
