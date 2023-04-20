@@ -19,48 +19,34 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 
-def read_geojson(path: str) -> geojson.GeoJSON:
-    """Read a local or remote GeoJSON file.
+def read_geojson(path: str) -> geojson.FeatureCollection:
+    """Read a local or remote GeoJSON file that contains
+    a FeatureCollection.
 
     Parameters
     ----------
     path : str
-        Path or URL pointing to a GeoJSON file.
+        Path or URL pointing to a GeoJSON file that contains
+        a FeatureCollection.
 
     Returns
     -------
-    GeoJSON
-        A GeoJSON object.
+    geojson.FeatureCollection
+        A GeoJSON FeatureCollection.
     """
     if path.startswith(("http", "www")):
         resp = requests.get(url=path)
         resp.raise_for_status()
 
-        return geojson.GeoJSON(resp.json())
+        geojson_obj = geojson.loads(resp.text)
 
-    with open(path, "r") as f:
-        return geojson.load(f)
+    else:
+        with open(path, "r") as f:
+            geojson_obj = geojson.load(f)
 
+    assert isinstance(geojson_obj, geojson.FeatureCollection)
 
-def _get_random_feature(geojson_path: str) -> Dict:
-    """Picks a random feature from a GeoJSON file.
-
-    Parameters
-    ----------
-    geojson_path : str
-        Path or URI to a GeoJSON file.
-
-    Returns
-    -------
-    Dict
-        A dictionary containing a GeoJSON Feature.
-    """
-
-    geojson = read_geojson(path=geojson_path)
-
-    features = geojson["features"]
-
-    return random.choice(features)
+    return geojson_obj
 
 
 def _get_search_dates(end_date: datetime, period: int = 1) -> str:
@@ -288,8 +274,9 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
     stac_client = pystac_client.Client.open(url=inputs.catalog, ignore_conformance=True)
 
     logger.info(f"Selecting random feature from {inputs.geojson_path}")
-    feature = _get_random_feature(geojson_path=inputs.geojson_path)
-    logger.info(f"Feature selected: {feature['properties']}")
+    feature_collection = read_geojson(path=inputs.geojson_path)
+    feature = random.choice(feature_collection["features"])
+    logger.info(f"Feature selected: {feature}")
 
     scene_item = _get_scene(
         stac_client=stac_client,
