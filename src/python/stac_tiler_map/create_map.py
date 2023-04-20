@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import random
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Dict, Tuple, Union
 
 import folium
@@ -49,7 +49,7 @@ def read_geojson(path: str) -> geojson.FeatureCollection:
     return geojson_obj
 
 
-def _get_search_dates(end_date: datetime, period: int = 1) -> str:
+def _get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
     """Generate a STAC search compliant datetime string (e.g., "2022-12-01/2023-01-01").
     Search start date is calculated by subtracting the period in days from the end date.
 
@@ -68,11 +68,9 @@ def _get_search_dates(end_date: datetime, period: int = 1) -> str:
 
     search_period = timedelta(days=period)
     start_date = end_date - search_period
-    start_date_str, end_date_str = [
-        datetime.strftime(date, "%Y-%m-%d") for date in [start_date, end_date]
-    ]
 
-    return f"{start_date_str}/{end_date_str}"
+    date_fmt = "%Y-%m-%d"
+    return f"{start_date:{date_fmt}}/{end_date:{date_fmt}}"
 
 
 def _get_scene(
