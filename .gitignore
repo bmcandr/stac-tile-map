@@ -6,3 +6,5 @@
 /dist/
 /.pids.pdm-python
 .pdm-python
+.pids
+requirements.txt
