@@ -1,4 +1,5 @@
-from pathlib import Path
+from datetime import date, datetime, timedelta
+from typing import Union
 from unittest.mock import mock_open, patch
 
 import geojson
@@ -69,3 +70,16 @@ class TestReadGeoJSON:
                 _file.assert_called_once_with(self.fake_file_path, "r")
 
 
+@pytest.mark.parametrize(
+    "end_date,period,expected",
+    [
+        (date(2023, 1, 1), 1, "2022-12-31/2023-01-01"),
+        (datetime(2023, 1, 1), 1, "2022-12-31/2023-01-01"),
+        (date(2023, 1, 31), 30, "2023-01-01/2023-01-31"),
+        (datetime(2023, 1, 31), 30, "2023-01-01/2023-01-31"),
+    ],
+)
+def test_get_search_dates(end_date: Union[date, datetime], period: int, expected: str):
+    date_range = _get_search_dates(end_date=end_date, period=period)
+
+    assert date_range == expected
