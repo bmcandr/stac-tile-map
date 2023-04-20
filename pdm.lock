@@ -126,6 +126,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "geojson"
+version = "3.0.1"
+requires_python = ">=3.7, <3.12"
+summary = "Python bindings and utilities for GeoJSON"
+
+[[package]]
 name = "h11"
 version = "0.14.0"
 requires_python = ">=3.7"
@@ -334,6 +340,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "requests-mock"
+version = "1.10.0"
+summary = "Mock out responses from the requests package"
+dependencies = [
+    "requests<3,>=2.3",
+    "six",
+]
+
+[[package]]
 name = "shapely"
 version = "2.0.1"
 requires_python = ">=3.7"
@@ -439,7 +454,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 [metadata]
 lock_version = "4.2"
 groups = ["default", "dev"]
-content_hash = "sha256:f262069a63eb6f1fbc496d3a247205e0576b597b0f636130fa9cc012748ea02b"
+content_hash = "sha256:c29e9275b8c9daa7a5e7c72faa8fa826201b59eb79b27254fc634f0266bc9cf6"
 
 [metadata.files]
 "anyio 3.6.2" = [
@@ -585,6 +600,10 @@ content_hash = "sha256:f262069a63eb6f1fbc496d3a247205e0576b597b0f636130fa9cc0127
 "folium 0.14.0" = [
     {url = "https://files.pythonhosted.org/packages/0e/0f/22068577bc5eafdcbf5521dbaed6a5317a434ad6847ad3711dee1fd1f6ba/folium-0.14.0-py2.py3-none-any.whl", hash = "sha256:c894e2c029a8ca40e043a311978a895cefe32d746a94263f807dd7b6b2e9c679"},
     {url = "https://files.pythonhosted.org/packages/bb/d0/2d8d1a500d829caa0e6b394ee933344f7fee81cb685409e5aaf5c9492f64/folium-0.14.0.tar.gz", hash = "sha256:8ec44697d18f5932e0fdaee8b19da98625de4d0e72cb30ef56f9479f18e11b9f"},
+]
+"geojson 3.0.1" = [
+    {url = "https://files.pythonhosted.org/packages/1e/17/4f866d92f74ac1dcca4dad1665ce2e54c8feb861cd6e4b20de4fbf9b5f7b/geojson-3.0.1.tar.gz", hash = "sha256:ff3d75acab60b1e66504a11f7ea12c104bad32ff3c410a807788663b966dee4a"},
+    {url = "https://files.pythonhosted.org/packages/ca/51/2e8e2aae941e64f9cc840ab5cdc4efa9bc6652690c2ac613ce3ef15cad59/geojson-3.0.1-py3-none-any.whl", hash = "sha256:e49df982b204ed481e4c1236c57f587adf71537301cf8faf7120ab27d73c7568"},
 ]
 "h11 0.14.0" = [
     {url = "https://files.pythonhosted.org/packages/95/04/ff642e65ad6b90db43e668d70ffb6736436c7ce41fcc549f4e9472234127/h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
@@ -932,6 +951,10 @@ content_hash = "sha256:f262069a63eb6f1fbc496d3a247205e0576b597b0f636130fa9cc0127
 "requests 2.28.2" = [
     {url = "https://files.pythonhosted.org/packages/9d/ee/391076f5937f0a8cdf5e53b701ffc91753e87b07d66bae4a09aa671897bf/requests-2.28.2.tar.gz", hash = "sha256:98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"},
     {url = "https://files.pythonhosted.org/packages/d2/f4/274d1dbe96b41cf4e0efb70cbced278ffd61b5c7bb70338b62af94ccb25b/requests-2.28.2-py3-none-any.whl", hash = "sha256:64299f4909223da747622c030b781c0d7811e359c37124b4bd368fb8c6518baa"},
+]
+"requests-mock 1.10.0" = [
+    {url = "https://files.pythonhosted.org/packages/9e/ea/c03f99a9df9086a686fd37072886563b5a9776d33b438147308fd95e4be7/requests-mock-1.10.0.tar.gz", hash = "sha256:59c9c32419a9fb1ae83ec242d98e889c45bd7d7a65d48375cc243ec08441658b"},
+    {url = "https://files.pythonhosted.org/packages/b3/f9/6de3ebddd002f92df8c3f3bcb75c59a4dcc3d3b70bd4fd74ad53b20ab78e/requests_mock-1.10.0-py2.py3-none-any.whl", hash = "sha256:2fdbb637ad17ee15c06f33d31169e71bf9fe2bdb7bc9da26185be0dd8d842699"},
 ]
 "shapely 2.0.1" = [
     {url = "https://files.pythonhosted.org/packages/04/67/05e96af1c4ee130e12ac228da1ab86f7581809d8f008aa3a9ec19ea22eb2/shapely-2.0.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:70a18fc7d6418e5aea76ac55dce33f98e75bd413c6eb39cfed6a1ba36469d7d4"},

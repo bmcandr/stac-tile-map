@@ -1,6 +1,11 @@
 [tool.pdm]
 [tool.pdm.dev-dependencies]
-dev = ["black>=23.3.0", "isort>=5.12.0", "pytest>=7.3.1"]
+dev = [
+    "black>=23.3.0",
+    "isort>=5.12.0",
+    "pytest>=7.3.1",
+    "requests-mock>=1.10.0",
+]
 
 [project]
 name = "stac-tile-map"
@@ -21,6 +26,7 @@ dependencies = [
     "mangum>=0.17.0",
     "uvicorn>=0.21.1",
     "python-dateutil>=2.8.2",
+    "geojson>=3.0.1",
 ]
 requires-python = ">=3.9,<3.10"
 license = { text = "MIT" }
@@ -31,4 +37,4 @@ src_paths = ["src", "tests"]
 known_first_party = ["stac_tiler_map"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src/python"]
