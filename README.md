@@ -20,7 +20,7 @@ The FastAPI app is deployed to an AWS Lambda function using GitHub Actions.
 
 ## Setup
 
-This repo uses [Poetry](https://python-poetry.org/) for dependency management. After cloning, run `poetry install` from the root directory to set up a virtual environment. Run `poetry shell` to activate the environment in your session.
+This repo uses [PDM](https://pdm.fming.dev/latest/) for dependency management. After cloning this repo, run `pdm install` from the root directory to create a virtual environment with the required dependencies. Run `eval $(pdm venv activate)` to activate the environment in your session.
 
 Set `$PYTHONPATH` to the source path by changing directories into `src/python` and executing:
 
