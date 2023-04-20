@@ -5,12 +5,7 @@ import geojson
 import geojson.utils
 import pytest
 
-from stac_tiler_map.create_map import (
-    _get_random_feature,
-    _get_scene,
-    _get_search_dates,
-    read_geojson,
-)
+from stac_tiler_map.create_map import _get_scene, _get_search_dates, read_geojson
 
 GEOJSON_TYPES = [
     "Point",
@@ -29,28 +24,48 @@ def feature_collection(request):
     }
 
 
-@pytest.mark.parametrize(
-    "feature_collection",
-    GEOJSON_TYPES,
-    indirect=True,
-)
-class TestReadGeoJSON:
-    def test_read_local_geojson(self, feature_collection):
-        fake_file_path = "path/to/data.geojson"
+@pytest.fixture
+def geometry(request):
+    return geojson.utils.generate_random(request.param)
 
+
+class TestReadGeoJSON:
+    fake_file_path = "path/to/data.geojson"
+    fake_file_url = "http://www.example.com/data.geojson"
+
+    feature_collection_args = (
+        "feature_collection",
+        GEOJSON_TYPES,
+    )
+
+    @pytest.mark.parametrize(*feature_collection_args, indirect=True)
+    def test_read_local_geojson_feature_collection(self, feature_collection):
         with patch(
             "stac_tiler_map.create_map.open",
             new=mock_open(read_data=geojson.dumps(feature_collection)),
         ) as _file:
-            geojson_obj = read_geojson(fake_file_path)
-            _file.assert_called_once_with(fake_file_path, "r")
+            geojson_obj = read_geojson(self.fake_file_path)
+            _file.assert_called_once_with(self.fake_file_path, "r")
 
         assert geojson_obj == feature_collection
 
-    def test_read_remote_geojson(self, requests_mock, feature_collection):
-        fake_file_url = "http://www.example.com/data.geojson"
-
-        requests_mock.get(fake_file_url, json=feature_collection)
-        geojson_obj = read_geojson(fake_file_url)
+    @pytest.mark.parametrize(*feature_collection_args, indirect=True)
+    def test_read_remote_geojson_feature_collection(
+        self, requests_mock, feature_collection
+    ):
+        requests_mock.get(self.fake_file_url, json=feature_collection)
+        geojson_obj = read_geojson(self.fake_file_url)
 
         assert geojson_obj == feature_collection
+
+    @pytest.mark.parametrize("geometry", GEOJSON_TYPES, indirect=True)
+    def test_read_local_geojson_geometry(self, geometry):
+        with pytest.raises(AssertionError):
+            with patch(
+                "stac_tiler_map.create_map.open",
+                new=mock_open(read_data=geojson.dumps(geometry)),
+            ) as _file:
+                _ = read_geojson(self.fake_file_path)
+                _file.assert_called_once_with(self.fake_file_path, "r")
+
+
