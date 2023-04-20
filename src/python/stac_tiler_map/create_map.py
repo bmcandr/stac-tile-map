@@ -119,9 +119,9 @@ def _get_scene(
             query=query,
         )
 
-        scene_items = search.get_all_items()
+        scene_items = search.item_collection()
 
-        if scene_items:
+        if len(scene_items):
             logger.info("Scenes found!")
             # sort by nodata and cloud cover
             scene_items = sorted(
