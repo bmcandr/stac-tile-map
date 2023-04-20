@@ -1,8 +1,9 @@
 import json
 import logging
+import os
 import random
 from datetime import datetime, timedelta
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union
 
 import folium
 import folium.features
@@ -17,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 
-def read_local_geojson(path: str) -> Dict:
+def read_local_geojson(path: Union[str, os.PathLike]) -> Dict:
     """Read a local GeoJSON file.
 
     Parameters
