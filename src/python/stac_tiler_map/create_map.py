@@ -7,6 +7,7 @@ from typing import Dict, Tuple, Union
 
 import folium
 import folium.features
+import geojson
 import pystac
 import pystac_client
 import requests
@@ -18,43 +19,27 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 
-def read_local_geojson(path: Union[str, os.PathLike]) -> Dict:
-    """Read a local GeoJSON file.
+def read_geojson(path: str) -> geojson.GeoJSON:
+    """Read a local or remote GeoJSON file.
 
     Parameters
     ----------
     path : str
-        Path pointing to the file.
+        Path or URL pointing to a GeoJSON file.
 
     Returns
     -------
-    Dict
-        The GeoJSON content.
+    GeoJSON
+        A GeoJSON object.
     """
+    if path.startswith(("http", "www")):
+        resp = requests.get(url=path)
+        resp.raise_for_status()
 
-    with open(path, "r") as fp:
-        geojson = json.load(fp)
+        return geojson.GeoJSON(resp.json())
 
-    return geojson
-
-
-def read_remote_geojson(url: str) -> Dict:
-    """Read a remote GeoJSON file.
-
-    Parameters
-    ----------
-    url : str
-        URL pointing to the file.
-
-    Returns
-    -------
-    Dict
-        The GeoJSON content.
-    """
-
-    resp = requests.get(url=url)
-    resp.raise_for_status()
-    return resp.json()
+    with open(path, "r") as f:
+        return geojson.load(f)
 
 
 def _get_random_feature(geojson_path: str) -> Dict:
@@ -71,13 +56,7 @@ def _get_random_feature(geojson_path: str) -> Dict:
         A dictionary containing a GeoJSON Feature.
     """
 
-    read_geojson = (
-        read_remote_geojson
-        if geojson_path.startswith(("http", "www"))
-        else read_local_geojson
-    )
-
-    geojson = read_geojson(geojson_path)
+    geojson = read_geojson(path=geojson_path)
 
     features = geojson["features"]
 
