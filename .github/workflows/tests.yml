@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install dependencies
-        run: pdm install
+        run: pdm install --no-self
       - name: Test with pytest
         run: |
           pytest
