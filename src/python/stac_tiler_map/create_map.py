@@ -21,7 +21,7 @@ logger = logging.getLogger(__file__)
 DATE_FMT = "%Y-%m-%d"
 
 
-def read_geojson(path: str) -> geojson.GeoJSON:
+def read_geojson(path: str) -> geojson.FeatureCollection:
     """Read a local or remote GeoJSON file.
 
     If the file contains only a Geometry, it is converted to
