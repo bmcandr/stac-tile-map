@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v3
+      - uses: pdm-project/setup-pdm@v3
+        name: Set up PDM
         with:
-          python-version: "3.10"
+          python-version: 3.10
+          cache: true
       - name: Install dependencies
         run: pdm install --no-self
       - name: Test with pytest
