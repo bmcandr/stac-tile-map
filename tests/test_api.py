@@ -7,3 +7,4 @@ client = TestClient(app_factory())
 def test_default_map():
     resp = client.get("/map")
     assert resp.status_code == 200
+    assert resp.text.startswith("<!DOCTYPE html>")
