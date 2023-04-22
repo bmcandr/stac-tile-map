@@ -18,6 +18,8 @@ from shapely import geometry
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
+DATE_FMT = "%Y-%m-%d"
+
 
 def read_geojson(path: str) -> geojson.GeoJSON:
     """Read a local or remote GeoJSON file.
@@ -71,8 +73,7 @@ def _get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
     search_period = timedelta(days=period)
     start_date = end_date - search_period
 
-    date_fmt = "%Y-%m-%d"
-    return f"{start_date:{date_fmt}}/{end_date:{date_fmt}}"
+    return f"{start_date:{DATE_FMT}}/{end_date:{DATE_FMT}}"
 
 
 def _get_scene(

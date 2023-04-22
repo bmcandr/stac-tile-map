@@ -4,9 +4,16 @@ from unittest.mock import mock_open, patch
 
 import geojson
 import geojson.utils
+import hypothesis.strategies as st
 import pytest
+from hypothesis import given
 
-from stac_tiler_map.create_map import _get_scene, _get_search_dates, read_geojson
+from stac_tiler_map.create_map import (
+    DATE_FMT,
+    _get_scene,
+    _get_search_dates,
+    read_geojson,
+)
 
 GEOJSON_TYPES = [
     "Point",
@@ -63,16 +70,11 @@ class TestReadGeoJSON:
             )
 
 
-@pytest.mark.parametrize(
-    "end_date,period,expected",
-    [
-        (date(2023, 1, 1), 1, "2022-12-31/2023-01-01"),
-        (datetime(2023, 1, 1), 1, "2022-12-31/2023-01-01"),
-        (date(2023, 1, 31), 30, "2023-01-01/2023-01-31"),
-        (datetime(2023, 1, 31), 30, "2023-01-01/2023-01-31"),
-    ],
+@given(
+    end_date=st.dates() | st.datetimes(), period=st.integers(min_value=1, max_value=90)
 )
-def test_get_search_dates(end_date: Union[date, datetime], period: int, expected: str):
+def test_get_search_dates(end_date: Union[date, datetime], period: int):
     date_range = _get_search_dates(end_date=end_date, period=period)
+    start_date = end_date - timedelta(days=period)
 
-    assert date_range == expected
+    assert date_range == f"{start_date:{DATE_FMT}}/{end_date:{DATE_FMT}}"
