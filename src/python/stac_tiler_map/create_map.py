@@ -1,9 +1,7 @@
-import json
 import logging
-import os
 import random
 from datetime import date, datetime, timedelta
-from typing import Dict, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
 import folium
 import folium.features
@@ -76,12 +74,15 @@ def _get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
     return f"{start_date:{DATE_FMT}}/{end_date:{DATE_FMT}}"
 
 
-def _get_scene(
+def get_item(
     stac_client: pystac_client.Client,
     collection: str,
     end_date: datetime,
     search_period: int,
     intersects: Dict,
+    query: Dict[str, Dict[str, Any]] = {},
+    sort_on: List[str] = [],
+    reverse_sort: bool = False,
 ) -> pystac.Item:
     """Searches the STAC collection for an Item that matches the criteria.
     If nothing found in first search, search iterates backwards in time
@@ -99,6 +100,12 @@ def _get_scene(
         Length of search period (in days).
     intersects : Dict
         GeoJSON geometry or object that implements __geo_interface__
+    query : Dict[str, Dict[str, Any]]
+        A STAC compliant search query. Defaults to `{}`.
+    sort_on : List[str]
+        Properties to sort on.
+    reverse_sort : bool
+        Reverse order of sorting. Defaults to False (ascending).
 
     Returns
     -------
@@ -106,43 +113,34 @@ def _get_scene(
         A STAC Item that meets the search criteria.
     """
 
-    query_keys = ["s2:nodata_pixel_percentage", "eo:cloud_cover"]
-    query_criteria = {"gte": 0, "lte": 10}
-    query = {query_key: query_criteria for query_key in query_keys}
-
-    scene_item = None
-    while not scene_item:
-        search_dates = _get_search_dates(end_date=end_date, period=search_period)
-        logger.info(f"Searching date range {search_dates} with query {query}")
+    item_collection = None
+    while not item_collection:
+        date_range = _get_search_dates(end_date=end_date, period=search_period)
+        logger.info(
+            f"Searching date range {date_range} {f'with query {query}' if query else ''}"
+        )
 
         search = stac_client.search(
             collections=[collection],
-            datetime=search_dates,
+            datetime=date_range,
             intersects=intersects,
             query=query,
         )
 
-        scene_items = search.item_collection()
+        item_collection = search.item_collection()
 
-        if len(scene_items):
-            logger.info("Scenes found!")
-            # sort by nodata and cloud cover
-            scene_items = sorted(
-                scene_items,
-                key=lambda item: [
-                    item.properties[query_key] for query_key in query_keys
-                ],
-            )
-
-            scene_item = scene_items[0]
-            break
-
-        # loosen cloud cover criteria
-        query["eo:cloud_cover"]["lte"] += 5
         # search prior period
         end_date = end_date - timedelta(days=search_period)
 
-    return scene_item
+    logger.info("Scenes found!")
+    # sort by nodata and cloud cover
+    items = sorted(
+        item_collection,
+        key=lambda item: [item.properties[property] for property in sort_on],
+        reverse=reverse_sort,
+    )
+
+    return items[0]
 
 
 def _create_map(
@@ -279,12 +277,18 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
     feature = geojson.Feature(**random.choice(feature_collection["features"]))
     logger.info(f"Feature selected: {feature}")
 
-    scene_item = _get_scene(
+    query_keys = ["s2:nodata_pixel_percentage", "eo:cloud_cover"]
+    query_criteria = {"gte": 0, "lte": 10}
+    query = {query_key: query_criteria for query_key in query_keys}
+
+    scene_item = get_item(
         stac_client=stac_client,
         collection=inputs.collection,
         end_date=datetime.utcnow(),
         search_period=inputs.search_period,
         intersects=feature["geometry"],
+        query=query,
+        sort_on=query_keys,
     )
 
     logger.info("Creating map")
