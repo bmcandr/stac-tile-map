@@ -18,4 +18,4 @@ jobs:
         run: pdm install --no-self
       - name: Test with pytest
         run: |
-          ./venv/bin/pytest
+          python -m pytest
