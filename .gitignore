@@ -9,3 +9,6 @@
 .pids
 requirements.txt
 *.egg-info
+.coverage
+.hypothesis
+coverage.xml
