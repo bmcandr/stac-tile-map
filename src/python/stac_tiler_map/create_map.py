@@ -19,20 +19,21 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 
-def read_geojson(path: str) -> geojson.FeatureCollection:
-    """Read a local or remote GeoJSON file that contains
+def read_geojson(path: str) -> geojson.GeoJSON:
+    """Read a local or remote GeoJSON file.
+
+    If the file contains only a Geometry, it is converted to
     a FeatureCollection.
 
     Parameters
     ----------
     path : str
-        Path or URL pointing to a GeoJSON file that contains
-        a FeatureCollection.
+        Path or URL to a GeoJSON file.
 
     Returns
     -------
     geojson.FeatureCollection
-        A GeoJSON FeatureCollection.
+        A GeoJSON FeatureCollection object.
     """
     if path.startswith(("http", "www")):
         resp = requests.get(url=path)
@@ -44,7 +45,8 @@ def read_geojson(path: str) -> geojson.FeatureCollection:
         with open(path, "r") as f:
             geojson_obj = geojson.load(f)
 
-    assert isinstance(geojson_obj, geojson.FeatureCollection)
+    if not isinstance(geojson_obj, geojson.FeatureCollection):
+        geojson_obj = geojson.FeatureCollection(features=[geojson_obj])
 
     return geojson_obj
 
@@ -273,6 +275,7 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
 
     logger.info(f"Selecting random feature from {inputs.geojson_path}")
     feature_collection = read_geojson(path=inputs.geojson_path)
+    assert isinstance(feature_collection, geojson.FeatureCollection)
     feature = random.choice(feature_collection["features"])
     logger.info(f"Feature selected: {feature}")
 
