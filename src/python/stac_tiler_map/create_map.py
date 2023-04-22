@@ -276,8 +276,7 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
 
     logger.info(f"Selecting random feature from {inputs.geojson_path}")
     feature_collection = read_geojson(path=inputs.geojson_path)
-    assert isinstance(feature_collection, geojson.FeatureCollection)
-    feature = random.choice(feature_collection["features"])
+    feature = geojson.Feature(**random.choice(feature_collection["features"]))
     logger.info(f"Feature selected: {feature}")
 
     scene_item = _get_scene(
