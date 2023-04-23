@@ -8,6 +8,7 @@ dev = [
     "pytest-cov>=4.0.0",
     "httpx>=0.24.0",
     "hypothesis>=6.72.1",
+    "coverage>=7.2.3",
 ]
 
 [project]
