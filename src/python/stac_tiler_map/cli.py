@@ -1,4 +1,6 @@
+import json
 import logging
+from typing import Dict, List
 
 import click
 from schemas import Inputs
@@ -38,6 +40,18 @@ cli_inputs = Inputs()
     default=cli_inputs.search_period,
     help="Search period (in days)",
 )
+@click.option(
+    "--query",
+    default=cli_inputs.query,
+    type=dict,
+    help="Search query",
+)
+@click.option(
+    "--sort-on",
+    default=cli_inputs.sort_on,
+    multiple=True,
+    help="Properties to sort on",
+)
 def main(
     geojson_path: str,
     output_file: str,
@@ -45,13 +59,19 @@ def main(
     collection: str,
     asset_key: str,
     search_period: int,
+    query: Dict,
+    sort_on: List[str],
 ):
+    print(type(query))
+    print(sort_on)
     inputs = Inputs(
         geojson_path=geojson_path,
         catalog=catalog,
         collection=collection,
         asset_key=asset_key,
         search_period=search_period,
+        query=query,
+        sort_on=sort_on,
     )
     m = create_stac_tiler_map(inputs=inputs)
 
