@@ -67,7 +67,7 @@ It should be possible to deploy the FastAPI app to AWS Lambda as a PEX hosted in
 
 The inner-most circle is the entire project, moving away from the center are folders then, finally, a single file. The size and color of each slice is representing the number of statements and the coverage, respectively.
 
-![](https://codecov.io/github/bmcandr/stac-tile-map/branch/main/graphs/sunburst.svg?token=CJRUFNT8QX)
+![sunburst](https://codecov.io/github/bmcandr/stac-tile-map/branch/main/graphs/sunburst.svg?token=CJRUFNT8QX)
 
 ## Acknowledgements
 
