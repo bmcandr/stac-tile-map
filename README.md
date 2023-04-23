@@ -1,6 +1,6 @@
 # STAC+COG Map
 
-[![Docker CI/CD Pipeline](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml)
+[![codecov](https://codecov.io/github/bmcandr/stac-tile-map/branch/main/graph/badge.svg?token=CJRUFNT8QX)](https://codecov.io/github/bmcandr/stac-tile-map) [![Docker CI/CD Pipeline](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml/badge.svg)](https://github.com/bmcandr/stac-tile-map/actions/workflows/ci-docker-lambda.yml)
 
 **TLDR;** [click here to view an interactive map displaying a recent Sentinel-2 image over a random populated place*!](https://6ukssjutoemmbqd3x7diq2xmlm0rjrmn.lambda-url.us-east-1.on.aws/map) Refresh for a new map.
 
@@ -20,7 +20,7 @@ The FastAPI app is deployed to an AWS Lambda function using GitHub Actions.
 
 ## Setup
 
-This repo uses [PDM](https://pdm.fming.dev/latest/) for dependency management. After cloning this repo, run `pdm install` from the root directory to create a virtual environment with the required dependencies. Run `eval $(pdm venv activate)` to activate the environment in your session.
+This repo uses [PDM](https://pdm.fming.dev/latest/) for dependency management. After cloning this repo, run `pdm install --no-self` from the root directory to create a virtual environment with the required dependencies. Run `eval $(pdm venv activate)` to activate the environment in your session.
 
 Set `$PYTHONPATH` to the source path by changing directories into `src/python` and executing:
 
@@ -62,6 +62,12 @@ I use a GitHub Actions workflow (`.github/workflows/ci-docker-lambda.yml`) to de
 ### Problems
 
 It should be possible to deploy the FastAPI app to AWS Lambda as a PEX hosted in S3. The `.github/workflows/ci-pants-lambda.yml` file uses Pants to package the code in a Lambda-compliant PEX, uploads it to an S3 bucket, and updates the Lambda function. The app refuses to run, however, due to dependency issues (e.g., wheel tags don't match for `cryptography` library [`cp36` vs `cp39`]). Not sure how to fix this at the moment...
+
+### Test Coverage
+
+The inner-most circle is the entire project, moving away from the center are folders then, finally, a single file. The size and color of each slice is representing the number of statements and the coverage, respectively.
+
+![](https://codecov.io/github/bmcandr/stac-tile-map/branch/main/graphs/sunburst.svg?token=CJRUFNT8QX)
 
 ## Acknowledgements
 
