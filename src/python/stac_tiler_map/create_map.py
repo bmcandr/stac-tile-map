@@ -51,7 +51,7 @@ def read_geojson(path: str) -> geojson.FeatureCollection:
     return geojson_obj
 
 
-def _get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
+def get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
     """Generate a STAC search compliant datetime string (e.g., "2022-12-01/2023-01-01").
     Search start date is calculated by subtracting the period in days from the end date.
 
@@ -74,16 +74,15 @@ def _get_search_dates(end_date: Union[date, datetime], period: int = 1) -> str:
     return f"{start_date:{DATE_FMT}}/{end_date:{DATE_FMT}}"
 
 
-def get_item(
+def get_items(
     stac_client: pystac_client.Client,
     collection: str,
     end_date: datetime,
     search_period: int,
     intersects: Dict,
     query: Dict[str, Dict[str, Any]] = {},
-    sort_on: List[str] = [],
-    reverse_sort: bool = False,
-) -> pystac.Item:
+    search_loops: int = 12,
+) -> Union[pystac.ItemCollection, None]:
     """Searches the STAC collection for an Item that matches the criteria.
     If nothing found in first search, search iterates backwards in time
     by search period (and lightly loosens cloud cover query criteria).
@@ -102,10 +101,6 @@ def get_item(
         GeoJSON geometry or object that implements __geo_interface__
     query : Dict[str, Dict[str, Any]]
         A STAC compliant search query. Defaults to `{}`.
-    sort_on : List[str]
-        Properties to sort on.
-    reverse_sort : bool
-        Reverse order of sorting. Defaults to False (ascending).
 
     Returns
     -------
@@ -114,8 +109,8 @@ def get_item(
     """
 
     item_collection = None
-    while not item_collection:
-        date_range = _get_search_dates(end_date=end_date, period=search_period)
+    for _ in range(search_loops):
+        date_range = get_search_dates(end_date=end_date, period=search_period)
         logger.info(
             f"Searching date range {date_range} {f'with query {query}' if query else ''}"
         )
@@ -129,18 +124,29 @@ def get_item(
 
         item_collection = search.item_collection()
 
+        if item_collection:
+            break
+
         # search prior period
         end_date = end_date - timedelta(days=search_period)
 
+    if not item_collection:
+        logger.info("No scenes found!")
+
     logger.info("Scenes found!")
-    # sort by nodata and cloud cover
-    items = sorted(
+    return item_collection
+
+
+def sort_items(
+    item_collection: pystac.ItemCollection,
+    sort_on: List[str],
+    ascending: bool = True,
+) -> List[pystac.Item]:
+    return sorted(
         item_collection,
         key=lambda item: [item.properties[property] for property in sort_on],
-        reverse=reverse_sort,
+        reverse=(not ascending),
     )
-
-    return items[0]
 
 
 def _create_map(
@@ -274,36 +280,42 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
 
     logger.info(f"Selecting random feature from {inputs.geojson_path}")
     feature_collection = read_geojson(path=inputs.geojson_path)
-    feature = geojson.Feature(**random.choice(feature_collection["features"]))
-    logger.info(f"Feature selected: {feature}")
+    feature = feature_collection["features"][0]
 
-    query_keys = ["s2:nodata_pixel_percentage", "eo:cloud_cover"]
-    query_criteria = {"gte": 0, "lte": 10}
-    query = {query_key: query_criteria for query_key in query_keys}
+    item_collection = None
+    while not item_collection:
+        feature = geojson.Feature(**random.choice(feature_collection["features"]))
+        logger.info(f"Feature selected: {feature}")
 
-    scene_item = get_item(
-        stac_client=stac_client,
-        collection=inputs.collection,
-        end_date=datetime.utcnow(),
-        search_period=inputs.search_period,
-        intersects=feature["geometry"],
-        query=query,
-        sort_on=query_keys,
-    )
+        item_collection = get_items(
+            stac_client=stac_client,
+            collection=inputs.collection,
+            end_date=datetime.utcnow(),
+            search_period=inputs.search_period,
+            intersects=feature["geometry"],
+            query=inputs.query,
+        )
+
+    items = list(item_collection)
+
+    if inputs.sort_on:
+        items = sort_items(
+            item_collection=item_collection, sort_on=inputs.sort_on, ascending=True
+        )
+
+    item = items[0]
 
     logger.info("Creating map")
-    scene_centroid = geometry.shape(scene_item.geometry).centroid
+    scene_centroid = geometry.shape(item.geometry).centroid
     m = _create_map(location=(scene_centroid.y, scene_centroid.x))
 
-    logger.info(f"Adding scene {scene_item.id} to map")
-    tile_layer = _create_tile_layer_from_item(
-        item=scene_item, asset_key=inputs.asset_key
-    )
+    logger.info(f"Adding scene {item.id} to map")
+    tile_layer = _create_tile_layer_from_item(item=item, asset_key=inputs.asset_key)
     tile_layer.add_to(m)
 
     logger.info("Adding STAC info to feature")
     updated_feature = _add_stac_info_to_feature(
-        feature=feature.copy(), item=scene_item, asset_key=inputs.asset_key
+        feature=feature.copy(), item=item, asset_key=inputs.asset_key
     )
     logger.info("Adding GeoJSON layer to map")
     marker_layer = _create_geojson_layer(

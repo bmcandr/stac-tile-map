@@ -1,3 +1,5 @@
+from typing import Dict, List, Union
+
 from pydantic import AnyHttpUrl, BaseModel, Field
 
 
@@ -21,3 +23,10 @@ class Inputs(BaseModel):
         description="The period (in days) to search backwards starting from today",
         default=30,
     )
+    query: Dict[str, Dict[str, Union[int, float, str]]] = Field(
+        default={
+            "s2:nodata_pixel_percentage": {"gte": 0, "lte": 10},
+            "eo:cloud_cover": {"gte": 0, "lte": 10},
+        }
+    )
+    sort_on: List[str] = Field(default=["s2:nodata_pixel_percentage", "eo:cloud_cover"])
