@@ -18,9 +18,9 @@ jobs:
         run: pdm install --no-self
       - name: Test with pytest
         run: |
-          .venv/bin/coverage run -m pytest
+          .venv/bin/pytest --cov=src/python --cov-report=xml --cov-report=term
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: .coverage
+          file: coverage.xml
