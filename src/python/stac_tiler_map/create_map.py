@@ -150,17 +150,17 @@ def sort_items(
 
 
 def _create_map(
-    location: Tuple[float, float], tiles: str = "cartodbpositron", zoom_start: int = 10
+    center: Tuple[float, float], basemap: str = "cartodbpositron", zoom: int = 10
 ) -> folium.Map:
     """Create a folium map.
 
     Parameters
     ----------
-    location : Tuple[float, float]
+    center : Tuple[float, float]
         (lon, lat) to center map on.
-    tiles : str, optional
-        One of folium's built-in tilesets, by default "cartodbpositron"
-    zoom_start : int, optional
+    basemap : str, optional
+        One of folium's built-in basemap tilesets, by default "cartodbpositron"
+    zoom : int, optional
         Zoom level, by default 10
 
     Returns
@@ -170,9 +170,9 @@ def _create_map(
     """
 
     return folium.Map(
-        location=location,
-        tiles=tiles,
-        zoom_start=zoom_start,
+        location=center,
+        tiles=basemap,
+        zoom_start=zoom,
     )
 
 
@@ -307,7 +307,7 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
 
     logger.info("Creating map")
     scene_centroid = geometry.shape(item.geometry).centroid
-    m = _create_map(location=(scene_centroid.y, scene_centroid.x))
+    m = _create_map(center=(scene_centroid.y, scene_centroid.x))
 
     logger.info(f"Adding scene {item.id} to map")
     tile_layer = _create_tile_layer_from_item(item=item, asset_key=inputs.asset_key)
