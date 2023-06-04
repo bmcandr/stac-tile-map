@@ -2,6 +2,7 @@ import logging
 import random
 from datetime import date, datetime, timedelta
 from typing import Any, Dict, List, Tuple, Union
+from urllib.parse import urlencode
 
 import folium
 import folium.features
@@ -17,6 +18,26 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__file__)
 
 DATE_FMT = "%Y-%m-%d"
+
+
+class STACTileLayer(folium.TileLayer):
+    def __init__(
+        self,
+        item: pystac.Item,
+        assets: List[str],
+        tiler_endpoint: str = "https://titiler.xyz/stac/tiles/{z}/{x}/{y}",
+        **kwargs,
+    ):
+        asset_params = "".join([f"&assets={asset}" for asset in assets])
+        self.tiles_url = f"{tiler_endpoint}?url={item.get_self_href()}{asset_params}"
+
+        super().__init__(
+            tiles=self.tiles_url,
+            name="COG",
+            overlay=True,
+            attr="IndigoAg",
+            **kwargs,
+        )
 
 
 def read_geojson(path: str) -> geojson.FeatureCollection:
@@ -176,34 +197,6 @@ def _create_map(
     )
 
 
-def _create_tile_layer_from_item(
-    item: pystac.Item,
-    asset_key: str,
-    tiler_url: str = "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}",
-) -> folium.TileLayer:
-    """Create a map tile layer from a COG-containing STAC Item.
-
-    Parameters
-    ----------
-    item : pystac.Item
-        STAC Item with COG asset to add to tile layer.
-    asset_key : str
-        Key of asset to tile on layer.
-    tiler_url : str, optional
-        URL to the tiler, defaults to DevSeed's awesome free tiler "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}".
-
-    Returns
-    -------
-    folium.TileLayer
-        Tile layer displaying COG asset.
-    """
-
-    virtual_tiles = f"{tiler_url}?url={item.assets[asset_key].href}"
-    return folium.TileLayer(
-        tiles=virtual_tiles, name="COG", overlay=True, attr="IndigoAg"
-    )
-
-
 def _add_stac_info_to_feature(feature: Dict, item: pystac.Item, asset_key: str) -> Dict:
     """Adds link to STAC Item and asset download to feature.
 
@@ -310,7 +303,10 @@ def create_stac_tiler_map(inputs: Inputs) -> folium.Map:
     m = _create_map(center=(scene_centroid.y, scene_centroid.x))
 
     logger.info(f"Adding scene {item.id} to map")
-    tile_layer = _create_tile_layer_from_item(item=item, asset_key=inputs.asset_key)
+    tile_layer = STACTileLayer(
+        item=item,
+        assets=[inputs.asset_key],
+    )
     tile_layer.add_to(m)
 
     logger.info("Adding STAC info to feature")
